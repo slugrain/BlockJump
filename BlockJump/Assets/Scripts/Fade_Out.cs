@@ -15,7 +15,7 @@ public class Fade_Out : MonoBehaviour
 
     private bool stagefadeout;
 
-
+    private bool tutorialFadeOut;
     // Use this for initialization
     void Start()
     {
@@ -23,6 +23,8 @@ public class Fade_Out : MonoBehaviour
         alpha = fadealpha.color.a;                 //パネルのalpha値を取得
         titlefadeout = false;                             //シーン読み込み時にフェードインさせる
         stagefadeout = false;
+        tutorialFadeOut = false;
+
     }
 
     // Update is called once per frame
@@ -36,6 +38,10 @@ public class Fade_Out : MonoBehaviour
         if (stagefadeout == true)
         {
             Stage2FadeOut();
+        } 
+        if (tutorialFadeOut == true)
+        {
+            TutorialFadeOut();
         }
     }
 
@@ -60,6 +66,17 @@ public class Fade_Out : MonoBehaviour
             SceneManager.LoadScene("Title");
             Debug.Log("test");
         }
+    }    public void TutorialFadeOut()
+    {
+        Debug.Log("RunTest");
+        alpha += 0.01f;
+        fadealpha.color = new Color(0, 0, 0, alpha);
+        if (alpha >= 1)
+        {
+            stagefadeout = false;
+            SceneManager.LoadScene("Tutorial");
+            Debug.Log("test");
+        }
     }
     public void TitleFadeTrue()
     {
@@ -68,5 +85,9 @@ public class Fade_Out : MonoBehaviour
     public void Stage2FadeTrue()
     {
         stagefadeout = true;
+    }
+    public void TutorialFadeTrue()
+    {
+        tutorialFadeOut = true;
     }
 }
