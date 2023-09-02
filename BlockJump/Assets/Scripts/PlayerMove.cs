@@ -39,6 +39,13 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetMouseButton(1))// Wキー（前方移動）
         {
             transform.Rotate(0, 0, -360 * Time.deltaTime);
+            //spark.Play();
+            //Debug.Log("SpinUp");
+        }
+
+        if (Input.GetMouseButtonDown(1))// Wキー（前方移動）
+        {
+            transform.Rotate(0, 0, -360 * Time.deltaTime);
             spark.Play();
             Debug.Log("SpinUp");
         }
