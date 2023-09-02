@@ -46,6 +46,6 @@ public class Title_Move_Player : MonoBehaviour
     }
     public void Fade()
     {
-        fade_Out.FadeTrue();
+        fade_Out.TitleFadeOut();
     }
 }

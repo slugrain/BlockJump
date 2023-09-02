@@ -17,11 +17,11 @@ public class PlayerMove : MonoBehaviour
     private bool isJumping = false;
     private bool diagonalJamp = false;
     private float xPos;
+
+    public bool isDead = false;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        spark.Stop();
-        explosion.Stop();
     }
 
     void Update()
@@ -190,6 +190,7 @@ public class PlayerMove : MonoBehaviour
 
     public void Destroy()
     {
-        player.SetActive(false);
+        //player.SetActive(false);
+        isDead = true;
     }
 }

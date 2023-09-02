@@ -11,9 +11,9 @@ public class Fade_Out : MonoBehaviour
 
     private float alpha;           //パネルのalpha値取得変数
 
-    private bool fadeout;          //フェードアウトのフラグ変数
+    private bool titlefadeout;          //フェードアウトのフラグ変数
 
-
+    private bool stagefadeout;
 
 
     // Use this for initialization
@@ -21,31 +21,52 @@ public class Fade_Out : MonoBehaviour
     {
         fadealpha = Panelfade.GetComponent<Image>(); //パネルのイメージ取得
         alpha = fadealpha.color.a;                 //パネルのalpha値を取得
-        fadeout = false;                             //シーン読み込み時にフェードインさせる
+        titlefadeout = false;                             //シーン読み込み時にフェードインさせる
+        stagefadeout = false;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (fadeout == true)
+        if (titlefadeout == true)
         {
-            FadeOut();
+            TitleFadeOut();
+        }
+        if (stagefadeout == true)
+        {
+            Stage2FadeOut();
         }
     }
 
-    void FadeOut()
+    public void TitleFadeOut()
     {
         alpha += 0.01f;
         fadealpha.color = new Color(0, 0, 0, alpha);
         if (alpha >= 1)
         {
-            fadeout = false;
+            titlefadeout = false;
             SceneManager.LoadScene("Stage2");
         }
     }
-    public void FadeTrue()
+    public void Stage2FadeOut()
     {
-        fadeout = true;
+        Debug.Log("RunTest");
+        alpha += 0.01f;
+        fadealpha.color = new Color(0, 0, 0, alpha);
+        if (alpha >= 1)
+        {
+            stagefadeout = false;
+            SceneManager.LoadScene("Title");
+            Debug.Log("test");
+        }
+    }
+    public void TitleFadeTrue()
+    {
+        titlefadeout = true;
+    }
+    public void Stage2FadeTrue()
+    {
+        stagefadeout = true;
     }
 }
