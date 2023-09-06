@@ -16,6 +16,8 @@ public class Fade_Out : MonoBehaviour
     private bool stagefadeout;
 
     private bool tutorialFadeOut;
+
+    public bool gameoverFadeOut;
     // Use this for initialization
     void Start()
     {
@@ -24,7 +26,7 @@ public class Fade_Out : MonoBehaviour
         titlefadeout = false;                             //シーン読み込み時にフェードインさせる
         stagefadeout = false;
         tutorialFadeOut = false;
-
+        gameoverFadeOut = false;
     }
 
     // Update is called once per frame
@@ -43,6 +45,10 @@ public class Fade_Out : MonoBehaviour
         {
             TutorialFadeOut();
         }
+        if(gameoverFadeOut == true)
+        {
+            GameoverFadeOut();
+        }
     }
 
     public void TitleFadeOut()
@@ -55,27 +61,36 @@ public class Fade_Out : MonoBehaviour
             SceneManager.LoadScene("Stage2");
         }
     }
+    
     public void Stage2FadeOut()
     {
-        Debug.Log("RunTest");
         alpha += 0.01f;
         fadealpha.color = new Color(0, 0, 0, alpha);
         if (alpha >= 1)
         {
             stagefadeout = false;
             SceneManager.LoadScene("Title");
-            Debug.Log("test");
         }
-    }    public void TutorialFadeOut()
+    }   
+    
+    public void TutorialFadeOut()
     {
-        Debug.Log("RunTest");
         alpha += 0.01f;
         fadealpha.color = new Color(0, 0, 0, alpha);
         if (alpha >= 1)
         {
             stagefadeout = false;
             SceneManager.LoadScene("Tutorial");
-            Debug.Log("test");
+        }
+    }
+    public void GameoverFadeOut()
+    {
+        alpha += 0.01f;
+        fadealpha.color = new Color(0, 0, 0, alpha);
+        if (alpha >= 1)
+        {
+            gameoverFadeOut = false;
+            SceneManager.LoadScene("Title");
         }
     }
     public void TitleFadeTrue()
@@ -89,5 +104,9 @@ public class Fade_Out : MonoBehaviour
     public void TutorialFadeTrue()
     {
         tutorialFadeOut = true;
+    }
+    public void GameOverFadeTrue()
+    {
+        gameoverFadeOut = true;
     }
 }
