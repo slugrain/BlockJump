@@ -2045,6 +2045,7 @@ MonoBehaviour:
   spark: {fileID: 562257379}
   explosion: {fileID: 677954407}
   player: {fileID: 668778068}
+  fade: {fileID: 1607848535}
   upjumpPower: 0
   diagonaljumpPower: 0
   isDead: 0
@@ -5431,6 +5432,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panelfade: {fileID: 746346903}
+  gameoverFadeOut: 0
+  clearFadeOut: 0
 --- !u!114 &1607848537
 MonoBehaviour:
   m_ObjectHideFlags: 0

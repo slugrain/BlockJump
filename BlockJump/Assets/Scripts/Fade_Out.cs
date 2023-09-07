@@ -12,13 +12,11 @@ public class Fade_Out : MonoBehaviour
     private float alpha;           //パネルのalpha値取得変数
 
     private bool titlefadeout;          //フェードアウトのフラグ変数
-
     private bool stagefadeout;
-
     private bool tutorialFadeOut;
-
     public bool gameoverFadeOut;
-    // Use this for initialization
+    public bool clearFadeOut;
+
     void Start()
     {
         fadealpha = Panelfade.GetComponent<Image>(); //パネルのイメージ取得
@@ -27,6 +25,7 @@ public class Fade_Out : MonoBehaviour
         stagefadeout = false;
         tutorialFadeOut = false;
         gameoverFadeOut = false;
+        clearFadeOut = false;
     }
 
     // Update is called once per frame
@@ -48,6 +47,10 @@ public class Fade_Out : MonoBehaviour
         if(gameoverFadeOut == true)
         {
             GameoverFadeOut();
+        }
+        if(clearFadeOut == true)
+        {
+            ClearFadeOut();
         }
     }
 
@@ -93,6 +96,16 @@ public class Fade_Out : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
+    public void ClearFadeOut()
+    {
+        alpha += 0.01f;
+        fadealpha.color = new Color(0, 0, 0, alpha);
+        if (alpha >= 1)
+        {
+            clearFadeOut = false;
+            SceneManager.LoadScene("Clear");
+        }
+    }
     public void TitleFadeTrue()
     {
         titlefadeout = true;
@@ -108,5 +121,9 @@ public class Fade_Out : MonoBehaviour
     public void GameOverFadeTrue()
     {
         gameoverFadeOut = true;
+    }
+    public void ClearFadeTrue()
+    {
+        clearFadeOut = true;
     }
 }
