@@ -90,7 +90,7 @@ public class Fade_Out : MonoBehaviour
         if (alpha >= 1)
         {
             gameoverFadeOut = false;
-            SceneManager.LoadScene("Title");
+            SceneManager.LoadScene("GameOver");
         }
     }
     public void TitleFadeTrue()
