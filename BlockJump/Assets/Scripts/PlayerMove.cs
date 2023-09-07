@@ -12,6 +12,11 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private ParticleSystem explosion;
     public GameObject player;
+    [SerializeField]
+    public GameObject fade;
+
+    Fade_Out fadeOut;
+
     public float upjumpPower;
     public float diagonaljumpPower;
     private bool isJumping = false;
@@ -22,10 +27,13 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        fadeOut = fade.GetComponent<Fade_Out>();
+        //isJumping = fadeOut.clearFadeOut;
     }
 
     void Update()
     {
+        if(isDead)return;
 
         transform.Rotate(0, 0, -720 * Time.deltaTime);
 
@@ -54,6 +62,8 @@ public class PlayerMove : MonoBehaviour
     
     void FixedUpdate()
     {
+        if (isDead) return;
+
         if (Input.GetMouseButton(0))// Wキー（前方移動）
         {
             Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
@@ -113,6 +123,7 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            isDead = true;
             explosion.Play();
             Invoke("Destroy", 1f);
             Debug.Log("青の壁の側面に当たった");
@@ -121,6 +132,7 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            isDead = true;
             explosion.Play();
             Invoke("Destroy", 0.5f);
 
@@ -129,6 +141,7 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Under"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            isDead = true;
             explosion.Play();
             Invoke("Destroy", 1f);
             Debug.Log("青の壁の下面に当たった");
@@ -140,6 +153,7 @@ public class PlayerMove : MonoBehaviour
           | RigidbodyConstraints.FreezePositionY
           | RigidbodyConstraints.FreezeRotationY;
             rb.AddForce(new Vector3(60, 0, 0), ForceMode.VelocityChange);
+            fadeOut.clearFadeOut = true;
             Debug.Log("ジャンプパッド！");
         }
 

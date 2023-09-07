@@ -11,6 +11,7 @@ public class TimeScript : MonoBehaviour
     float leftTime = 10;
     void Update()
     {
+        if(Input.GetKey(KeyCode.Q))return;
 
         //1•b‚É1•b‚¸‚ÂŒ¸‚ç‚µ‚Ä‚¢‚­
         leftTime -= Time.deltaTime;
