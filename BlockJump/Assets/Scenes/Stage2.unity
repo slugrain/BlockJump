@@ -2475,22 +2475,12 @@ MonoBehaviour:
   goalspark: {fileID: 531782702}
   explosion: {fileID: 677954407}
   player: {fileID: 668778068}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
   fade: {fileID: 1607848535}
   goal_Obj: {fileID: 1915448168}
-=======
-  fade: {fileID: 1607848535}
->>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
   goal_Camera: {fileID: 2103128867}
   textUI: {fileID: 1988445430}
   canvasObj: {fileID: 1252228897}
   star_move: {fileID: 0}
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
   upjumpPower: 0
   diagonaljumpPower: 0
   goal: 0
@@ -3107,11 +3097,6 @@ RectTransform:
   m_AnchoredPosition: {x: 960, y: 540}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
 --- !u!1 &761743375
 GameObject:
   m_ObjectHideFlags: 0
@@ -3148,11 +3133,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-<<<<<<< HEAD
   m_AnchoredPosition: {x: 122.1, y: 3.3}
-=======
-  m_AnchoredPosition: {x: 210.1, y: -205.5}
->>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
   m_SizeDelta: {x: 1200, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &761743377
@@ -3209,10 +3190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e886ee23ae638640b8a195dd3b262f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
 --- !u!1 &796204315
 GameObject:
   m_ObjectHideFlags: 0
