@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.ParticleSystem;
-
+using UnityEngine.UI;
 public class PlayerMove : MonoBehaviour
 {
     Rigidbody rb;
@@ -10,14 +10,22 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] 
     private ParticleSystem spark;
     [SerializeField]
+    private ParticleSystem goalspark;
+    [SerializeField]
     private ParticleSystem explosion;
     public GameObject player;
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
     [SerializeField]
     public GameObject fade;
     [SerializeField]
     public GameObject goal_Obj;
+=======
+    [SerializeField]
+    public GameObject fade;
+
+>>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
     public Goal_Camera goal_Camera;
     Fade_Out fadeOut;
 
@@ -27,21 +35,30 @@ public class PlayerMove : MonoBehaviour
    // public GameObject voiceText;
     Vector3 targetPosition;
     public Star_Move star_move;
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
     public float upjumpPower;
     public float diagonaljumpPower;
     private bool isJumping = false;
     private bool diagonalJamp = false;
     private float xPos;
-
+    public bool goal = false;
     public bool isDead = false;
+    public SE_Manager sE_Manager;
     void Start()
     {
+        Invoke("StartVoice", 1.5f);
         rb = GetComponent<Rigidbody>();
+        fadeOut = fade.GetComponent<Fade_Out>();
+        //isJumping = fadeOut.clearFadeOut;
+        targetPosition = new Vector3(1000, 3.1f, -18);
     }
 
     void Update()
     {
+        if(isDead)return;
 
         transform.Rotate(0, 0, -720 * Time.deltaTime);
 
@@ -49,6 +66,7 @@ public class PlayerMove : MonoBehaviour
         {
             rb.AddForce(new Vector3(60, 0, 0), ForceMode.VelocityChange);
             spark.Stop();
+            sE_Manager.Play(1);
             Debug.Log("Dash");
         }
 
@@ -65,11 +83,22 @@ public class PlayerMove : MonoBehaviour
             spark.Play();
             Debug.Log("SpinUp");
         }
+
+        if (goal == true)// Wキー（前方移動）
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+            transform.Rotate(0, 0, -720 * Time.deltaTime);
+            Invoke("GoalAnim", 3f);
+          
+            Debug.Log("go");
+        }
     }
 
     
     void FixedUpdate()
     {
+        if (isDead) return;
+
         if (Input.GetMouseButton(0))// Wキー（前方移動）
         {
             Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
@@ -90,14 +119,7 @@ public class PlayerMove : MonoBehaviour
             Vector3 force = new Vector3(-7, 0, 0);    // 力を設定
             rb.AddForce(force);  // 力を加える
         }
-        if (Input.GetKeyDown(KeyCode.Space))// Wキー（前方移動）
-        {
-            //FreezePositionXYZ全てをオンにする
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationYをオンにする
-            rb.constraints = RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("青の壁から離れた");
-        }
+        
 
     }
     void OnCollisionEnter(Collision collision)// 青の壁に衝突した際の判定を取る
@@ -129,42 +151,61 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            isDead = true;
             explosion.Play();
-            Invoke("Destroy", 1f);
+            Invoke("Destroy", 0.1f);
             Debug.Log("青の壁の側面に当たった");
 
         }
 
         if (collision.gameObject.CompareTag("Red_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            isDead = true;
             explosion.Play();
-            Invoke("Destroy", 0.5f);
+            Invoke("Destroy", 0.1f);
 
             Debug.Log("青の壁の上面に当たった");
         }
 
         if (collision.gameObject.CompareTag("Red_Wall_Under"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            isDead = true;
             explosion.Play();
-            Invoke("Destroy", 1f);
+            Invoke("Destroy", 0.1f);
             Debug.Log("青の壁の下面に当たった");
         }
 
         if (collision.gameObject.CompareTag("Jamp_Pad"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
-          | RigidbodyConstraints.FreezePositionY
+          //| RigidbodyConstraints.FreezePositionY
           | RigidbodyConstraints.FreezeRotationY;
-            rb.AddForce(new Vector3(60, 0, 0), ForceMode.VelocityChange);
+            //isDead = true;
+            goal = true;
+            Invoke("GoalFade", 6f);
+            goalspark.Play();
+            goal_Camera.GoalCamera();
             Debug.Log("ジャンプパッド！");
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
             canvasObj.SetActive(false);        
             //voiceText.SetActive(false);
             goal_Obj.SetActive(true);
 >>>>>>> Stashed changes
+=======
+            canvasObj.SetActive(false);        
+            //voiceText.SetActive(false);
+>>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
         }
 
+        if (collision.gameObject.CompareTag("Star"))//　衝突した際のタグが"Star"だった時の判定
+        {
+            star_move.StarGet();
+            Debug.Log("Star Get");
+        }
+
+        
         if (collision.gameObject.CompareTag("Walp_Point"))
         {
             
@@ -210,9 +251,48 @@ public class PlayerMove : MonoBehaviour
 
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        //接触したオブジェクトのタグが"Voice"のとき
+        if (other.CompareTag("Voice"))
+        {
+            sE_Manager.Play(3);
+            textUI.text = "壁を伝って下っていきましょう。";
+        }
+        //接触したオブジェクトのタグが"Voice2"のとき
+        if (other.CompareTag("Voice2"))
+        {
+            sE_Manager.Play(4);
+            textUI.text = "天井を伝ってすばやく移動！";
+        }
+        //接触したオブジェクトのタグが"Voice_Goal"のとき
+        if (other.CompareTag("Voice_Goal"))
+        {
+            sE_Manager.Play(6);
+            textUI.text = "ゴーーール!";
+        }
+    }
     public void Destroy()
     {
         //player.SetActive(false);
         isDead = true;
+        sE_Manager.Play(5);
+    }
+    public void StartVoice()
+    {
+        sE_Manager.Play(7);
+    }
+    public void GoalAnim()
+    {
+        rb.constraints = RigidbodyConstraints.FreezePositionZ
+       | RigidbodyConstraints.FreezePositionY
+       | RigidbodyConstraints.FreezeRotationY;
+        transform.position =
+          Vector3.MoveTowards(transform.position, targetPosition, 0.2f);
+        Debug.Log("ゴール演出");
+    }
+    public void GoalFade()
+    {
+        fadeOut.clearFadeOut = true;
     }
 }

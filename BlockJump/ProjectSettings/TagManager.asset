@@ -14,6 +14,11 @@ TagManager:
   - Red_Wall_Under
   - Walp_Point
   - Jamp_Pad
+  - Star
+  - Key_Wall
+  - Voice
+  - Voice2
+  - Voice_Goal
   layers:
   - Default
   - TransparentFX

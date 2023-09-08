@@ -19,6 +19,7 @@ public class Title_Camera : MonoBehaviour
     
     void Update()
     {
+        //  スペースキーでタイトル遷移
         if (Input.GetKeyDown(KeyCode.Space))
         {
 
