@@ -83,7 +83,7 @@ public class Fade_Out : MonoBehaviour
         if (alpha >= 1)
         {
             stagefadeout = false;
-            SceneManager.LoadScene("Tutorial");
+            SceneManager.LoadScene("Stage2");
         }
     }
     public void GameoverFadeOut()
