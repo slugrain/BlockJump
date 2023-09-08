@@ -14,18 +14,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private ParticleSystem explosion;
     public GameObject player;
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
     [SerializeField]
     public GameObject fade;
     [SerializeField]
     public GameObject goal_Obj;
-=======
-    [SerializeField]
-    public GameObject fade;
-
->>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
     public Goal_Camera goal_Camera;
     Fade_Out fadeOut;
 
@@ -35,10 +27,6 @@ public class PlayerMove : MonoBehaviour
    // public GameObject voiceText;
     Vector3 targetPosition;
     public Star_Move star_move;
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
     public float upjumpPower;
     public float diagonaljumpPower;
     private bool isJumping = false;
@@ -186,17 +174,9 @@ public class PlayerMove : MonoBehaviour
             goalspark.Play();
             goal_Camera.GoalCamera();
             Debug.Log("ジャンプパッド！");
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-=======
             canvasObj.SetActive(false);        
             //voiceText.SetActive(false);
             goal_Obj.SetActive(true);
->>>>>>> Stashed changes
-=======
-            canvasObj.SetActive(false);        
-            //voiceText.SetActive(false);
->>>>>>> 3ae9e68a9b396a46a9bf6d4a63f5c81f16f238b2
         }
 
         if (collision.gameObject.CompareTag("Star"))//　衝突した際のタグが"Star"だった時の判定
