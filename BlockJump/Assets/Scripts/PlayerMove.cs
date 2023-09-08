@@ -12,6 +12,22 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     private ParticleSystem explosion;
     public GameObject player;
+<<<<<<< Updated upstream
+=======
+    [SerializeField]
+    public GameObject fade;
+    [SerializeField]
+    public GameObject goal_Obj;
+    public Goal_Camera goal_Camera;
+    Fade_Out fadeOut;
+
+    public Text textUI;
+
+    public GameObject canvasObj;
+   // public GameObject voiceText;
+    Vector3 targetPosition;
+    public Star_Move star_move;
+>>>>>>> Stashed changes
     public float upjumpPower;
     public float diagonaljumpPower;
     private bool isJumping = false;
@@ -141,6 +157,12 @@ public class PlayerMove : MonoBehaviour
           | RigidbodyConstraints.FreezeRotationY;
             rb.AddForce(new Vector3(60, 0, 0), ForceMode.VelocityChange);
             Debug.Log("ジャンプパッド！");
+<<<<<<< Updated upstream
+=======
+            canvasObj.SetActive(false);        
+            //voiceText.SetActive(false);
+            goal_Obj.SetActive(true);
+>>>>>>> Stashed changes
         }
 
         if (collision.gameObject.CompareTag("Walp_Point"))
