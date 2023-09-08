@@ -20,7 +20,9 @@ public class PlayerMove : MonoBehaviour
     public Goal_Camera goal_Camera;
     Fade_Out fadeOut;
 
-   Vector3 targetPosition;
+    public Text textUI;
+
+    Vector3 targetPosition;
     public Star_Move star_move;
     public float upjumpPower;
     public float diagonaljumpPower;
@@ -49,6 +51,7 @@ public class PlayerMove : MonoBehaviour
         {
             rb.AddForce(new Vector3(60, 0, 0), ForceMode.VelocityChange);
             spark.Stop();
+            sE_Manager.Play(1);
             Debug.Log("Dash");
         }
 
@@ -101,14 +104,7 @@ public class PlayerMove : MonoBehaviour
             Vector3 force = new Vector3(-7, 0, 0);    // 力を設定
             rb.AddForce(force);  // 力を加える
         }
-        if (Input.GetKeyDown(KeyCode.Space))// Wキー（前方移動）
-        {
-            //FreezePositionXYZ全てをオンにする
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationYをオンにする
-            rb.constraints = RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("青の壁から離れた");
-        }
+        
 
     }
     void OnCollisionEnter(Collision collision)// 青の壁に衝突した際の判定を取る
@@ -142,7 +138,7 @@ public class PlayerMove : MonoBehaviour
         {
             isDead = true;
             explosion.Play();
-            Invoke("Destroy", 1f);
+            Invoke("Destroy", 0.1f);
             Debug.Log("青の壁の側面に当たった");
 
         }
@@ -151,7 +147,7 @@ public class PlayerMove : MonoBehaviour
         {
             isDead = true;
             explosion.Play();
-            Invoke("Destroy", 1f);
+            Invoke("Destroy", 0.1f);
 
             Debug.Log("青の壁の上面に当たった");
         }
@@ -160,7 +156,7 @@ public class PlayerMove : MonoBehaviour
         {
             isDead = true;
             explosion.Play();
-            Invoke("Destroy", 1f);
+            Invoke("Destroy", 0.1f);
             Debug.Log("青の壁の下面に当たった");
         }
 
@@ -171,7 +167,7 @@ public class PlayerMove : MonoBehaviour
           | RigidbodyConstraints.FreezeRotationY;
             //isDead = true;
             goal = true;
-            //fadeOut.clearFadeOut = true;
+            Invoke("GoalFade", 6f);
             goalspark.Play();
             goal_Camera.GoalCamera();
             Debug.Log("ジャンプパッド！");
@@ -231,16 +227,30 @@ public class PlayerMove : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        //接触したオブジェクトのタグが"Player"のとき
+        //接触したオブジェクトのタグが"Voice"のとき
         if (other.CompareTag("Voice"))
         {
             sE_Manager.Play(3);
+            textUI.text = "壁を伝って下っていきましょう。";
+        }
+        //接触したオブジェクトのタグが"Voice2"のとき
+        if (other.CompareTag("Voice2"))
+        {
+            sE_Manager.Play(4);
+            textUI.text = "天井を伝ってすばやく移動！";
+        }
+        //接触したオブジェクトのタグが"Voice_Goal"のとき
+        if (other.CompareTag("Voice_Goal"))
+        {
+            sE_Manager.Play(6);
+            textUI.text = "ゴーーール!";
         }
     }
     public void Destroy()
     {
         //player.SetActive(false);
         isDead = true;
+        sE_Manager.Play(5);
     }
     public void StartVoice()
     {
@@ -254,5 +264,9 @@ public class PlayerMove : MonoBehaviour
         transform.position =
           Vector3.MoveTowards(transform.position, targetPosition, 0.2f);
         Debug.Log("ゴール演出");
+    }
+    public void GoalFade()
+    {
+        fadeOut.clearFadeOut = true;
     }
 }

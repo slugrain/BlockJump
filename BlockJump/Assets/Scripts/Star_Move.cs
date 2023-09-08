@@ -56,6 +56,8 @@ public class Star_Move : MonoBehaviour
         {
             var renderer = gameObject.GetComponent<Renderer>();
             renderer.enabled = false;
+            var collider = gameObject.GetComponent<Collider>();
+            renderer.enabled = false;
             move = true;
             acceleration = false;
             ep.Play();

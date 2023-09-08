@@ -15,8 +15,8 @@ public class Distance : MonoBehaviour
 
         distanceSlider = GetComponent<Slider>();
 
-        float goalDistance = 200f;
-        //float nowDistance = 100f;
+        float goalDistance = 118f;
+        
 
 
         //スライダーの最大値の設定

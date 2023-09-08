@@ -17,6 +17,8 @@ TagManager:
   - Star
   - Key_Wall
   - Voice
+  - Voice2
+  - Voice_Goal
   layers:
   - Default
   - TransparentFX
