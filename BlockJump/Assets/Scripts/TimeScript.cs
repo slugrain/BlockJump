@@ -8,9 +8,10 @@ public class TimeScript : MonoBehaviour
     [SerializeField]
     private GameObject timeUpCanvas;
     public Text leftTimeText;
-    float leftTime = 10;
+    float leftTime = 60;
     void Update()
     {
+        if(Input.GetKey(KeyCode.Q))return;
 
         //1•b‚É1•b‚¸‚ÂŒ¸‚ç‚µ‚Ä‚¢‚­
         leftTime -= Time.deltaTime;
