@@ -19,9 +19,9 @@ public class PlayerMove : MonoBehaviour
 
     public float upjumpPower;
     public float diagonaljumpPower;
-    private bool isJumping = false;
-    private bool diagonalJamp = false;
-    private float xPos;
+    //private bool isJumping = false;
+    //private bool diagonalJamp = false;
+    //private float xPos;
 
     public bool isDead = false;
     void Start()
@@ -153,7 +153,7 @@ public class PlayerMove : MonoBehaviour
           | RigidbodyConstraints.FreezePositionY
           | RigidbodyConstraints.FreezeRotationY;
             rb.AddForce(new Vector3(60, 0, 0), ForceMode.VelocityChange);
-            fadeOut.clearFadeOut = true;
+            fadeOut.toClearFadeOut = true;
             Debug.Log("ジャンプパッド！");
         }
 
