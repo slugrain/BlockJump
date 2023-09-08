@@ -22,6 +22,8 @@ public class PlayerMove : MonoBehaviour
 
     public Text textUI;
 
+    public GameObject canvasObj;
+   // public GameObject voiceText;
     Vector3 targetPosition;
     public Star_Move star_move;
     public float upjumpPower;
@@ -171,6 +173,8 @@ public class PlayerMove : MonoBehaviour
             goalspark.Play();
             goal_Camera.GoalCamera();
             Debug.Log("ジャンプパッド！");
+            canvasObj.SetActive(false);        
+            //voiceText.SetActive(false);
         }
 
         if (collision.gameObject.CompareTag("Star"))//　衝突した際のタグが"Star"だった時の判定
@@ -254,7 +258,7 @@ public class PlayerMove : MonoBehaviour
     }
     public void StartVoice()
     {
-        sE_Manager.Play(2);
+        sE_Manager.Play(7);
     }
     public void GoalAnim()
     {

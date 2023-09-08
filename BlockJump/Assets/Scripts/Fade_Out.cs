@@ -61,7 +61,7 @@ public class Fade_Out : MonoBehaviour
         if (alpha >= 1)
         {
             titlefadeout = false;
-            SceneManager.LoadScene("Stage2");
+            SceneManager.LoadScene("Tutorial");
         }
     }
     
