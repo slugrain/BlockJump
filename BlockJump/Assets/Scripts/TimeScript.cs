@@ -14,7 +14,7 @@ public class TimeScript : MonoBehaviour
     private PlayerMove playerMove;
 
     public Text leftTimeText;
-    float leftTime = 60;
+    float leftTime = 90;
 
     void Start()
     {
