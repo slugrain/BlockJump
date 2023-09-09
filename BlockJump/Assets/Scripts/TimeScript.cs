@@ -7,8 +7,24 @@ public class TimeScript : MonoBehaviour
 {
     [SerializeField]
     private GameObject timeUpCanvas;
+
+    private GameObject fadePanel;
+    private Fade_Out fadeOut;
+    private GameObject player;
+    private PlayerMove playerMove;
+
     public Text leftTimeText;
-    float leftTime = 60;
+    float leftTime = 10;
+
+    void Start()
+    {
+        fadePanel = GameObject.Find("Fade_Canvas");
+        fadeOut = fadePanel.GetComponent<Fade_Out>();
+
+        player = GameObject.Find("Player");
+        playerMove = player.GetComponent<PlayerMove>();
+    }
+
     void Update()
     {
         if(Input.GetKey(KeyCode.Q))return;
@@ -23,6 +39,14 @@ public class TimeScript : MonoBehaviour
         {
             timeUpCanvas.SetActive(true);
             Debug.Log("GameOver");
+            //  0908ïœçXì_
+            playerMove.isDead = true;
+            Invoke(nameof(hoge), 3.0f);
         }
+    }
+
+    private void hoge()
+    {
+        fadeOut.ToGameOverFadeTrue();
     }
 }

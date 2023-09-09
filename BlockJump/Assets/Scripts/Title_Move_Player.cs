@@ -5,7 +5,7 @@ using UnityEngine;
 public class Title_Move_Player : MonoBehaviour
 {
     private bool up;
-    private bool down;
+    // private bool down;
     Rigidbody rb;
     public SE_Manager sE_Manager;
     public Fade_Out fade_Out;
@@ -13,7 +13,7 @@ public class Title_Move_Player : MonoBehaviour
     void Start()
     {
         up = false;
-        down = false;    
+        // down = false;    
         rb = GetComponent<Rigidbody>();
     }
 
@@ -46,6 +46,6 @@ public class Title_Move_Player : MonoBehaviour
     }
     public void Fade()
     {
-        fade_Out.TitleFadeTrue();
+        fade_Out.ToStageFadeTrue();
     }
 }

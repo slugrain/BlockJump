@@ -156,7 +156,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panelfade: {fileID: 1190499325}
-  gameoverFadeOut: 1
+  toStageFadeOut: 0
+  toTitleFadeOut: 0
+  toTutorialFadeOut: 0
+  toGameOverFadeOut: 0
+  toClearFadeOut: 0
 --- !u!114 &403854720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,7 +616,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 403854719}
         m_TargetAssemblyTypeName: Fade_Out, Assembly-CSharp
-        m_MethodName: TitleFadeTrue
+        m_MethodName: ToStageFadeTrue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1186,7 +1190,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 403854719}
         m_TargetAssemblyTypeName: Fade_Out, Assembly-CSharp
-        m_MethodName: Stage2FadeTrue
+        m_MethodName: ToTitleFadeTrue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
