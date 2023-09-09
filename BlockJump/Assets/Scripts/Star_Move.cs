@@ -37,7 +37,7 @@ public class Star_Move : MonoBehaviour
 
     public void StarGet()
     {
-        targetPosition = new Vector3(3, 2, 10);
+        targetPosition = new Vector3(-35, 20, 10);
         acceleration =true;
         Invoke("DelayStar", 2f);
     }
