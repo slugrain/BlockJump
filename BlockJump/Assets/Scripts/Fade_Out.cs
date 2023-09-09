@@ -63,7 +63,7 @@ public class Fade_Out : MonoBehaviour
     public void FadeOut()
     {
 
-        alpha += 0.1f;
+        alpha += 0.01f;
         fadealpha.color = new Color(0, 0, 0, alpha);
         if (alpha >= 1)
         {
