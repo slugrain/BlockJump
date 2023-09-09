@@ -2672,6 +2672,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ep: {fileID: 1621151199}
   star: {fileID: 580501847}
+  manager: {fileID: 1877805506}
 --- !u!4 &580501853 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000012240983028, guid: c4bf8b30fce268044a786a8600922324, type: 3}
