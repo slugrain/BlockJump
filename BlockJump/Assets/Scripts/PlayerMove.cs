@@ -271,6 +271,6 @@ public class PlayerMove : MonoBehaviour
     }
     public void GoalFade()
     {
-        fadeOut.clearFadeOut = true;
+        fadeOut.toClearFadeOut = true;
     }
 }
