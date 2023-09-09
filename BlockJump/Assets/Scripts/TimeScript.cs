@@ -14,10 +14,12 @@ public class TimeScript : MonoBehaviour
     private PlayerMove playerMove;
 
     public Text leftTimeText;
-    float leftTime = 90;
+    public static float leftTime;
 
     void Start()
     {
+        leftTime = 90;
+
         fadePanel = GameObject.Find("Fade_Canvas");
         fadeOut = fadePanel.GetComponent<Fade_Out>();
 
@@ -27,6 +29,7 @@ public class TimeScript : MonoBehaviour
 
     void Update()
     {
+        if (playerMove.isGoal) return;
         if(Input.GetKey(KeyCode.Q))return;
 
         //1•b‚É1•b‚¸‚ÂŒ¸‚ç‚µ‚Ä‚¢‚­
