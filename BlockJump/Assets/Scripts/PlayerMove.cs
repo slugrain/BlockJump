@@ -23,7 +23,8 @@ public class PlayerMove : MonoBehaviour
     public Text textUI;
 
     public GameObject canvasObj;
-   // public GameObject voiceText;
+    public GameObject goalObj;
+    // public GameObject voiceText;
     Vector3 targetPosition;
     public Star_Move star_move;
     public float upjumpPower;
@@ -162,6 +163,15 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("青の壁の下面に当たった");
         }
 
+        if (collision.gameObject.CompareTag("Key_Wall"))//　衝突した際の壁が"Key_Wall"タグだった時の判定
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ
+            | RigidbodyConstraints.FreezeRotationX
+            | RigidbodyConstraints.FreezeRotationY
+            | RigidbodyConstraints.FreezeRotationZ;
+            Debug.Log("通れない！");
+        }
+
         if (collision.gameObject.CompareTag("Jamp_Pad"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
@@ -173,7 +183,8 @@ public class PlayerMove : MonoBehaviour
             goalspark.Play();
             goal_Camera.GoalCamera();
             Debug.Log("ジャンプパッド！");
-            canvasObj.SetActive(false);        
+            canvasObj.SetActive(false);     
+            goalObj.SetActive(true);
             //voiceText.SetActive(false);
         }
 
@@ -192,10 +203,11 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Floor"))
         {
-            //FreezePositionXYZ全てをオンにする
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationYをオンにする
-            rb.constraints = RigidbodyConstraints.FreezeRotationY;
+            rb.constraints = RigidbodyConstraints.FreezePositionZ
+        | RigidbodyConstraints.FreezeRotationX
+        | RigidbodyConstraints.FreezeRotationY
+        | RigidbodyConstraints.FreezeRotationZ;
+
             Debug.Log("yuka");
         }
     }
@@ -248,6 +260,25 @@ public class PlayerMove : MonoBehaviour
         {
             sE_Manager.Play(6);
             textUI.text = "ゴーーール!";
+        }
+
+        //接触したオブジェクトのタグが"Voice_Star"のとき
+        if (other.CompareTag("Voice_Star"))
+        {
+            sE_Manager.Play(8);
+            textUI.text = "壁があるね…星が怪しい感じ…？";
+        }
+        //接触したオブジェクトのタグが"Voice_Saka"のとき
+        if (other.CompareTag("Voice_Saka"))
+        {
+            sE_Manager.Play(9);
+            textUI.text = "坂道だ！スピード注意！";
+        }
+
+        if (other.CompareTag("Voice_Kouhann"))
+        {
+            sE_Manager.Play(2);
+            textUI.text = "さあ、ステージも後半戦です、頑張ってください！";
         }
     }
     public void Destroy()

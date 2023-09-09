@@ -10,6 +10,8 @@ public class Title_Camera : MonoBehaviour
     public Title_Move_Player title_move;
     [SerializeField]
     private GameObject canvas;
+    [SerializeField]
+    private GameObject canvas_Text;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -26,6 +28,7 @@ public class Title_Camera : MonoBehaviour
             title_move.DownMax();
             animator.SetTrigger("Point_Up");
             canvas.SetActive(false);
+            canvas_Text.SetActive(false);
         }
     }
 }
