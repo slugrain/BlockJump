@@ -24,7 +24,8 @@ public class PlayerMove : MonoBehaviour
     public Text textUI;
 
     public GameObject canvasObj;
-   // public GameObject voiceText;
+    public GameObject goalObj;
+    // public GameObject voiceText;
     Vector3 targetPosition;
     public Star_Move star_move;
     public float upjumpPower;
@@ -32,7 +33,7 @@ public class PlayerMove : MonoBehaviour
     private bool isJumping = false;
     private bool diagonalJamp = false;
     private float xPos;
-    public bool goal = false;
+    public bool isGoal = false;
     public bool isDead = false;
     public SE_Manager sE_Manager;
     void Start()
@@ -42,6 +43,8 @@ public class PlayerMove : MonoBehaviour
         fadeOut = fade.GetComponent<Fade_Out>();
         //isJumping = fadeOut.clearFadeOut;
         targetPosition = new Vector3(1000, 3.1f, -18);
+
+        Physics.autoSimulation = true;
     }
 
     void Update()
@@ -72,7 +75,7 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("SpinUp");
         }
 
-        if (goal == true)// Wキー（前方移動）
+        if (isGoal == true)// Wキー（前方移動）
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             transform.Rotate(0, 0, -720 * Time.deltaTime);
@@ -139,28 +142,39 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
-            isDead = true;
             explosion.Play();
             Invoke("Destroy", 0.1f);
             Debug.Log("青の壁の側面に当たった");
-
+            isDead = true;
+            Physics.autoSimulation = false;
         }
 
         if (collision.gameObject.CompareTag("Red_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
-            isDead = true;
             explosion.Play();
             Invoke("Destroy", 0.1f);
-
             Debug.Log("青の壁の上面に当たった");
+            isDead = true;
+            Physics.autoSimulation = false;
         }
 
         if (collision.gameObject.CompareTag("Red_Wall_Under"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
-            isDead = true;
             explosion.Play();
             Invoke("Destroy", 0.1f);
             Debug.Log("青の壁の下面に当たった");
+            isDead = true;
+            Physics.autoSimulation = false;
+        }
+        
+
+        if (collision.gameObject.CompareTag("Key_Wall"))//　衝突した際の壁が"Key_Wall"タグだった時の判定
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ
+            | RigidbodyConstraints.FreezeRotationX
+            | RigidbodyConstraints.FreezeRotationY
+            | RigidbodyConstraints.FreezeRotationZ;
+            Debug.Log("通れない！");
         }
 
         if (collision.gameObject.CompareTag("Jamp_Pad"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
@@ -169,12 +183,13 @@ public class PlayerMove : MonoBehaviour
           //| RigidbodyConstraints.FreezePositionY
           | RigidbodyConstraints.FreezeRotationY;
             //isDead = true;
-            goal = true;
+            isGoal = true;
             Invoke("GoalFade", 6f);
             goalspark.Play();
             goal_Camera.GoalCamera();
             Debug.Log("ジャンプパッド！");
-            canvasObj.SetActive(false);        
+            canvasObj.SetActive(false);     
+            goalObj.SetActive(true);
             //voiceText.SetActive(false);
             goal_Obj.SetActive(true);
         }
@@ -194,10 +209,11 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Floor"))
         {
-            //FreezePositionXYZ全てをオンにする
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationYをオンにする
-            rb.constraints = RigidbodyConstraints.FreezeRotationY;
+            rb.constraints = RigidbodyConstraints.FreezePositionZ
+        | RigidbodyConstraints.FreezeRotationX
+        | RigidbodyConstraints.FreezeRotationY
+        | RigidbodyConstraints.FreezeRotationZ;
+
             Debug.Log("yuka");
         }
     }
@@ -251,6 +267,25 @@ public class PlayerMove : MonoBehaviour
             sE_Manager.Play(6);
             textUI.text = "ゴーーール!";
         }
+
+        //接触したオブジェクトのタグが"Voice_Star"のとき
+        if (other.CompareTag("Voice_Star"))
+        {
+            sE_Manager.Play(8);
+            textUI.text = "壁があるね…星が怪しい感じ…？";
+        }
+        //接触したオブジェクトのタグが"Voice_Saka"のとき
+        if (other.CompareTag("Voice_Saka"))
+        {
+            sE_Manager.Play(9);
+            textUI.text = "坂道だ！スピード注意！";
+        }
+
+        if (other.CompareTag("Voice_Kouhann"))
+        {
+            sE_Manager.Play(2);
+            textUI.text = "さあ、ステージも後半戦です、頑張ってください！";
+        }
     }
     public void Destroy()
     {
@@ -273,6 +308,6 @@ public class PlayerMove : MonoBehaviour
     }
     public void GoalFade()
     {
-        fadeOut.clearFadeOut = true;
+        fadeOut.toClearFadeOut = true;
     }
 }

@@ -17,7 +17,7 @@ public class Tutorial_Change : MonoBehaviour
 
     public void Fade_Change()
     {
-        fade_out.TutorialFadeTrue();
+        fade_out.ToStageFadeTrue();
     }
     public void Start_Voice()
     {

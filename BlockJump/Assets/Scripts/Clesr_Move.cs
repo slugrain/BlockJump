@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Goal_Text : MonoBehaviour
+public class Clesr_Move : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -13,8 +13,6 @@ public class Goal_Text : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0.5f, 0 * Time.deltaTime);
+        transform.Rotate(1, 1, -720 * Time.deltaTime);
     }
-
-
 }
