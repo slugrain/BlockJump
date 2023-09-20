@@ -11,9 +11,9 @@ public class Fade_Out : MonoBehaviour
 
     private float alpha;           //パネルのalpha値取得変数
 
-    private bool titlefadeout;          //フェードアウトのフラグ変数
-    private bool stagefadeout;
-    private bool tutorialFadeOut;
+    public bool titlefadeout;          //フェードアウトのフラグ変数
+    public bool stagefadeout;
+    public bool tutorialFadeOut;
     public bool gameoverFadeOut;
     public bool clearFadeOut;
 
@@ -61,7 +61,7 @@ public class Fade_Out : MonoBehaviour
         if (alpha >= 1)
         {
             titlefadeout = false;
-            SceneManager.LoadScene("Tutorial");
+            SceneManager.LoadScene("Tutorial_Stage");
         }
     }
     

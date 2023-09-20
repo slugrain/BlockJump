@@ -8,10 +8,12 @@ public class Title_Move_Player : MonoBehaviour
     private bool down;
     Rigidbody rb;
     public SE_Manager sE_Manager;
+    public BGM_Manager bGM_Manager;
     public Fade_Out fade_Out;
    
     void Start()
     {
+        bGM_Manager.Play(1);
         up = false;
         down = false;    
         rb = GetComponent<Rigidbody>();

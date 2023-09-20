@@ -23,7 +23,7 @@ public class BGM_Manager : MonoBehaviour
     {
         _instance = this;
         //‚±‚±‚Å—¬‚·ˆ—
-        Play(0);
+        //Play(0);
 
     }
     public void Play(int clip)

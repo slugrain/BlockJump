@@ -16,6 +16,10 @@ public class PlayerMove : MonoBehaviour
     public GameObject player;
     [SerializeField]
     public GameObject fade;
+    [SerializeField]
+    private SphereCollider sphereCollider;
+    [SerializeField]
+    private MeshRenderer meshRenderer;
 
     public Goal_Camera goal_Camera;
     Fade_Out fadeOut;
@@ -27,6 +31,7 @@ public class PlayerMove : MonoBehaviour
     // public GameObject voiceText;
     Vector3 targetPosition;
     public Star_Move star_move;
+    public Dash_Icon dash_icon;
     public float upjumpPower;
     public float diagonaljumpPower;
     private bool isJumping = false;
@@ -34,14 +39,19 @@ public class PlayerMove : MonoBehaviour
     private float xPos;
     public bool goal = false;
     public bool isDead = false;
+    public bool dash = true;
     public SE_Manager sE_Manager;
+    public BGM_Manager bGM_Manager;
     void Start()
     {
-        Invoke("StartVoice", 1.5f);
+        bGM_Manager.Play(0);
+        Invoke("StartVoice", 5f);
         rb = GetComponent<Rigidbody>();
         fadeOut = fade.GetComponent<Fade_Out>();
         //isJumping = fadeOut.clearFadeOut;
         targetPosition = new Vector3(1000, 3.1f, -18);
+        sphereCollider.GetComponent<Collider>();
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     void Update()
@@ -50,26 +60,30 @@ public class PlayerMove : MonoBehaviour
 
         transform.Rotate(0, 0, -720 * Time.deltaTime);
 
-        if (Input.GetMouseButtonUp(1))// Wキー（前方移動）
+        if (dash == true) 
         {
-            rb.AddForce(new Vector3(60, 0, 0), ForceMode.VelocityChange);
-            spark.Stop();
-            sE_Manager.Play(1);
-            Debug.Log("Dash");
-        }
+            if (Input.GetMouseButtonUp(1))// Wキー（前方移動）
+            {
+                rb.AddForce(new Vector3(70, 0, 0), ForceMode.VelocityChange);
+                spark.Stop();
+                sE_Manager.Play(1);
+                dash_icon.CTuse();
+                Debug.Log("Dash");
+            }
 
-        if (Input.GetMouseButton(1))// Wキー（前方移動）
-        {
-            transform.Rotate(0, 0, -360 * Time.deltaTime);
-            //spark.Play();
-            //Debug.Log("SpinUp");
-        }
+            if (Input.GetMouseButton(1))// Wキー（前方移動）
+            {
+                transform.Rotate(0, 0, -360 * Time.deltaTime);
+                //spark.Play();
+                //Debug.Log("SpinUp");
+            }
 
-        if (Input.GetMouseButtonDown(1))// Wキー（前方移動）
-        {
-            transform.Rotate(0, 0, -360 * Time.deltaTime);
-            spark.Play();
-            Debug.Log("SpinUp");
+            if (Input.GetMouseButtonDown(1))// Wキー（前方移動）
+            {
+                transform.Rotate(0, 0, -360 * Time.deltaTime);
+                spark.Play();
+                Debug.Log("SpinUp");
+            }
         }
 
         if (goal == true)// Wキー（前方移動）
@@ -77,7 +91,7 @@ public class PlayerMove : MonoBehaviour
             rb.constraints = RigidbodyConstraints.FreezeAll;
             transform.Rotate(0, 0, -720 * Time.deltaTime);
             Invoke("GoalAnim", 3f);
-          
+
             Debug.Log("go");
         }
     }
@@ -139,6 +153,8 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            rb.constraints = RigidbodyConstraints.FreezePosition;
+            sphereCollider.enabled = false;
             isDead = true;
             explosion.Play();
             Invoke("Destroy", 0.1f);
@@ -148,6 +164,8 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            rb.constraints = RigidbodyConstraints.FreezePosition;
+            sphereCollider.enabled = false;
             isDead = true;
             explosion.Play();
             Invoke("Destroy", 0.1f);
@@ -157,6 +175,8 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Under"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+            rb.constraints = RigidbodyConstraints.FreezePosition;
+            sphereCollider.enabled = false;
             isDead = true;
             explosion.Play();
             Invoke("Destroy", 0.1f);
@@ -192,13 +212,6 @@ public class PlayerMove : MonoBehaviour
         {
             star_move.StarGet();
             Debug.Log("Star Get");
-        }
-
-        
-        if (collision.gameObject.CompareTag("Walp_Point"))
-        {
-            
-            Debug.Log("yuka");
         }
 
         if (collision.gameObject.CompareTag("Floor"))
@@ -283,9 +296,9 @@ public class PlayerMove : MonoBehaviour
     }
     public void Destroy()
     {
-        //player.SetActive(false);
+        meshRenderer.enabled = false;
         isDead = true;
-        sE_Manager.Play(5);
+        sE_Manager.Play(5);      
     }
     public void StartVoice()
     {

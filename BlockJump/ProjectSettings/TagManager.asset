@@ -22,6 +22,13 @@ TagManager:
   - Voice_Star
   - Voice_Saka
   - Voice_Kouhann
+  - Voice_Dash_Tutorial
+  - Voice_Red_Wall
+  - Voice_Jump_Tutorial
+  - Voice_move_Right_Tutorial
+  - Voice_move_Left_Tutorial
+  - Voice_Blue_Wall
+  - Voice_Dash_Tutorial2
   layers:
   - Default
   - TransparentFX
