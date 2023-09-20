@@ -12,7 +12,7 @@ public class Fade_In_Start : MonoBehaviour
 
     private bool fadein = false;          //フェードインのフラグ用変数
 
-
+    
     // Use this for initialization
     void Start()
     {

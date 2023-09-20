@@ -17,11 +17,11 @@ public class GameOver : MonoBehaviour
 
     public void OnRetryClick()
     {
-        FadeOut.Stage2FadeTrue();
+        FadeOut.ToTitleFadeTrue();
     }
 
     public void OnTitleClick()
     {
-        FadeOut.gameoverFadeOut = true;
+        FadeOut.toGameOverFadeOut = true;
     }
 }

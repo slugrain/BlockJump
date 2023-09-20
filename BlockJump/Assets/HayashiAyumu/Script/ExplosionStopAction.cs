@@ -8,7 +8,7 @@ public class ExplosionStopAction : MonoBehaviour
     public Fade_Out fadeOut;
     private void OnParticleSystemStopped()
     {
-        fadeOut.GameOverFadeTrue();
+        fadeOut.ToGameOverFadeTrue();
         Debug.Log("パーティクルの再生が終了したよ！");
     }
 }

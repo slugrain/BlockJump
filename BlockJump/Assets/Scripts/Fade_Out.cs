@@ -10,52 +10,79 @@ public class Fade_Out : MonoBehaviour
     Image fadealpha;               //フェードパネルのイメージ取得変数
 
     private float alpha;           //パネルのalpha値取得変数
+    private string sceneName;
 
+<<<<<<< HEAD
     public bool titlefadeout;          //フェードアウトのフラグ変数
     public bool stagefadeout;
     public bool tutorialFadeOut;
     public bool gameoverFadeOut;
     public bool clearFadeOut;
+=======
+    public bool toStageFadeOut;          //フェードアウトのフラグ変数
+    public bool toTitleFadeOut;
+    public bool toTutorialFadeOut;
+    public bool toGameOverFadeOut;
+    public bool toClearFadeOut;
+>>>>>>> 3ba585a11fa31140428889153bfa53797024b8a5
 
     void Start()
     {
         fadealpha = Panelfade.GetComponent<Image>(); //パネルのイメージ取得
         alpha = fadealpha.color.a;                 //パネルのalpha値を取得
-        titlefadeout = false;                             //シーン読み込み時にフェードインさせる
-        stagefadeout = false;
-        tutorialFadeOut = false;
-        gameoverFadeOut = false;
-        clearFadeOut = false;
+        toStageFadeOut = false;                             //シーン読み込み時にフェードインさせる
+        toTitleFadeOut = false;
+        toTutorialFadeOut = false;
+        toGameOverFadeOut = false;
+        toClearFadeOut = false;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (titlefadeout == true)
+        if (toStageFadeOut == true)
         {
-            TitleFadeOut();
+            sceneName = "Stage2";
+            FadeOut();
         }
-        if (stagefadeout == true)
+        if (toTitleFadeOut == true)
         {
-            Stage2FadeOut();
+            sceneName = "Title";
+            FadeOut();
         } 
-        if (tutorialFadeOut == true)
+        if (toTutorialFadeOut == true)
         {
-            TutorialFadeOut();
+            sceneName = "Tutorial";
+            FadeOut();
         }
-        if(gameoverFadeOut == true)
+        if(toGameOverFadeOut == true)
         {
-            GameoverFadeOut();
+            sceneName = "GameOver"; 
+            FadeOut();
         }
-        if(clearFadeOut == true)
+        if(toClearFadeOut == true)
         {
-            ClearFadeOut();
+            sceneName = "Clear";
+            FadeOut();
+        }
+    }
+    
+    public void FadeOut()
+    {
+
+        alpha += 0.01f;
+        fadealpha.color = new Color(0, 0, 0, alpha);
+        if (alpha >= 1)
+        {
+            toClearFadeOut = false;
+            SceneManager.LoadScene(sceneName);
         }
     }
 
-    public void TitleFadeOut()
+    public void ToTitleFadeTrue()
     {
+<<<<<<< HEAD
         alpha += 0.01f;
         fadealpha.color = new Color(0, 0, 0, alpha);
         if (alpha >= 1)
@@ -63,67 +90,24 @@ public class Fade_Out : MonoBehaviour
             titlefadeout = false;
             SceneManager.LoadScene("Tutorial_Stage");
         }
+=======
+        toTitleFadeOut = true;
+>>>>>>> 3ba585a11fa31140428889153bfa53797024b8a5
     }
-    
-    public void Stage2FadeOut()
+    public void ToStageFadeTrue()
     {
-        alpha += 0.01f;
-        fadealpha.color = new Color(0, 0, 0, alpha);
-        if (alpha >= 1)
-        {
-            stagefadeout = false;
-            SceneManager.LoadScene("Title");
-        }
-    }   
-    
-    public void TutorialFadeOut()
-    {
-        alpha += 0.01f;
-        fadealpha.color = new Color(0, 0, 0, alpha);
-        if (alpha >= 1)
-        {
-            stagefadeout = false;
-            SceneManager.LoadScene("Stage2");
-        }
+        toStageFadeOut = true;
     }
-    public void GameoverFadeOut()
+    public void ToTutorialFadeTrue()
     {
-        alpha += 0.01f;
-        fadealpha.color = new Color(0, 0, 0, alpha);
-        if (alpha >= 1)
-        {
-            gameoverFadeOut = false;
-            SceneManager.LoadScene("GameOver");
-        }
+        toTutorialFadeOut = true;
     }
-    public void ClearFadeOut()
+    public void ToGameOverFadeTrue()
     {
-        alpha += 0.01f;
-        fadealpha.color = new Color(0, 0, 0, alpha);
-        if (alpha >= 1)
-        {
-            clearFadeOut = false;
-            SceneManager.LoadScene("Clear");
-        }
+        toGameOverFadeOut = true;
     }
-    public void TitleFadeTrue()
+    public void ToClearFadeTrue()
     {
-        titlefadeout = true;
-    }
-    public void Stage2FadeTrue()
-    {
-        stagefadeout = true;
-    }
-    public void TutorialFadeTrue()
-    {
-        tutorialFadeOut = true;
-    }
-    public void GameOverFadeTrue()
-    {
-        gameoverFadeOut = true;
-    }
-    public void ClearFadeTrue()
-    {
-        clearFadeOut = true;
+        toClearFadeOut = true;
     }
 }

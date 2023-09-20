@@ -37,7 +37,7 @@ public class PlayerMove : MonoBehaviour
     private bool isJumping = false;
     private bool diagonalJamp = false;
     private float xPos;
-    public bool goal = false;
+    public bool isGoal = false;
     public bool isDead = false;
     public bool dash = true;
     public SE_Manager sE_Manager;
@@ -50,8 +50,13 @@ public class PlayerMove : MonoBehaviour
         fadeOut = fade.GetComponent<Fade_Out>();
         //isJumping = fadeOut.clearFadeOut;
         targetPosition = new Vector3(1000, 3.1f, -18);
+<<<<<<< HEAD
         sphereCollider.GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
+=======
+
+        Physics.autoSimulation = true;
+>>>>>>> 3ba585a11fa31140428889153bfa53797024b8a5
     }
 
     void Update()
@@ -86,7 +91,7 @@ public class PlayerMove : MonoBehaviour
             }
         }
 
-        if (goal == true)// Wキー（前方移動）
+        if (isGoal == true)// Wキー（前方移動）
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             transform.Rotate(0, 0, -720 * Time.deltaTime);
@@ -153,35 +158,49 @@ public class PlayerMove : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Red_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+<<<<<<< HEAD
             rb.constraints = RigidbodyConstraints.FreezePosition;
             sphereCollider.enabled = false;
             isDead = true;
+=======
+>>>>>>> 3ba585a11fa31140428889153bfa53797024b8a5
             explosion.Play();
             Invoke("Destroy", 0.1f);
             Debug.Log("青の壁の側面に当たった");
-
+            isDead = true;
+            Physics.autoSimulation = false;
         }
 
         if (collision.gameObject.CompareTag("Red_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+<<<<<<< HEAD
             rb.constraints = RigidbodyConstraints.FreezePosition;
             sphereCollider.enabled = false;
             isDead = true;
+=======
+>>>>>>> 3ba585a11fa31140428889153bfa53797024b8a5
             explosion.Play();
             Invoke("Destroy", 0.1f);
-
             Debug.Log("青の壁の上面に当たった");
+            isDead = true;
+            Physics.autoSimulation = false;
         }
 
         if (collision.gameObject.CompareTag("Red_Wall_Under"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
+<<<<<<< HEAD
             rb.constraints = RigidbodyConstraints.FreezePosition;
             sphereCollider.enabled = false;
             isDead = true;
+=======
+>>>>>>> 3ba585a11fa31140428889153bfa53797024b8a5
             explosion.Play();
             Invoke("Destroy", 0.1f);
             Debug.Log("青の壁の下面に当たった");
+            isDead = true;
+            Physics.autoSimulation = false;
         }
+        
 
         if (collision.gameObject.CompareTag("Key_Wall"))//　衝突した際の壁が"Key_Wall"タグだった時の判定
         {
@@ -198,7 +217,7 @@ public class PlayerMove : MonoBehaviour
           //| RigidbodyConstraints.FreezePositionY
           | RigidbodyConstraints.FreezeRotationY;
             //isDead = true;
-            goal = true;
+            isGoal = true;
             Invoke("GoalFade", 6f);
             goalspark.Play();
             goal_Camera.GoalCamera();
@@ -315,6 +334,6 @@ public class PlayerMove : MonoBehaviour
     }
     public void GoalFade()
     {
-        fadeOut.clearFadeOut = true;
+        fadeOut.toClearFadeOut = true;
     }
 }
