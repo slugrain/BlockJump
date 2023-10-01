@@ -7,9 +7,10 @@ public class GameOver : MonoBehaviour
     //[SerializeField]
     //private GameObject FadeCanvas;
     private Fade_Out FadeOut;
+    public BGM_Manager BGM_Manager;
     void Start()
     {
-     //   FadeCanvas = GetComponent<GameObject>();
+        BGM_Manager.Play(0);
         FadeOut = GetComponent<Fade_Out>();
     }
 
