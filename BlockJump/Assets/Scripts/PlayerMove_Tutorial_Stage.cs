@@ -55,9 +55,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
     public Tutorial_Dash_Icon tutorial_Dash_Icon;
     public float upjumpPower;
     public float diagonaljumpPower;
-    private bool isJumping = false;
-    private bool diagonalJamp = false;
-    private float xPos;
+    //private bool isJumping = false;
+    //private bool diagonalJamp = false;
+    //private float xPos;
     public bool goal = false;
     public bool isDead = false;
     public bool dash = false;

@@ -34,9 +34,9 @@ public class PlayerMove : MonoBehaviour
     public Dash_Icon dash_icon;
     public float upjumpPower;
     public float diagonaljumpPower;
-    private bool isJumping = false;
-    private bool diagonalJamp = false;
-    private float xPos;
+    //private bool isJumping = false;
+    //private bool diagonalJamp = false;
+    //private float xPos;
     public bool isGoal = false;
     public bool isDead = false;
     public bool dash = true;
