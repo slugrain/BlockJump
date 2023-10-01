@@ -204,6 +204,7 @@ public class PlayerMove : MonoBehaviour
             canvasObj.SetActive(false);     
             goalObj.SetActive(true);
             //voiceText.SetActive(false);
+            goal_Obj.SetActive(true);
         }
 
         if (collision.gameObject.CompareTag("Star"))//�@�Փ˂����ۂ̃^�O��"Star"���������̔���
