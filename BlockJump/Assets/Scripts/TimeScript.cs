@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; //UI‹@”\‚ðˆµ‚¤‚Æ‚«‚É’Ç‹L‚·‚é
+using UnityEngine.UI; //UIï¿½@ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½É’Ç‹Lï¿½ï¿½ï¿½ï¿½
 
 public class TimeScript : MonoBehaviour
 {
+    public Fade_Out fade_Out;
     [SerializeField]
     private GameObject timeUpCanvas;
 
@@ -14,6 +15,8 @@ public class TimeScript : MonoBehaviour
     private PlayerMove playerMove;
 
     public Text leftTimeText;
+    public SE_Manager2 sE_Manager2;
+    private bool se = true;
     public static float leftTime;
 
     void Start()
@@ -31,24 +34,26 @@ public class TimeScript : MonoBehaviour
     {
         if (playerMove.isGoal) return;
         if(Input.GetKey(KeyCode.Q))return;
-
-        //1•b‚É1•b‚¸‚ÂŒ¸‚ç‚µ‚Ä‚¢‚­
+        
+        //1ï¿½bï¿½ï¿½1ï¿½bï¿½ï¿½ï¿½ÂŒï¿½ï¿½ç‚µï¿½Ä‚ï¿½ï¿½ï¿½
         leftTime -= Time.deltaTime;
-        //ƒ}ƒCƒiƒX‚Í•\Ž¦‚µ‚È‚¢
+        //ï¿½}ï¿½Cï¿½iï¿½Xï¿½Í•\ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½
         if (leftTime < 0) leftTime = 0;
-        leftTimeText.text = "Žc‚èŽžŠÔF" + ((int)leftTime).ToString();
+        leftTimeText.text = "ï¿½cï¿½èŽžï¿½ÔF" + ((int)leftTime).ToString();
 
-        if (leftTime == 0)
+        if (leftTime == 0 && se == true)
         {
             timeUpCanvas.SetActive(true);
             Debug.Log("GameOver");
-            //  0908•ÏX“_
+            //  0908ï¿½ÏXï¿½_
             playerMove.isDead = true;
-            Invoke(nameof(hoge), 3.0f);
+            se = false;
+            sE_Manager2.Play(1);
+            Invoke("GameOver", 3.0f);
         }
     }
 
-    private void hoge()
+    private void GameOver()
     {
         fadeOut.ToGameOverFadeTrue();
     }
