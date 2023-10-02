@@ -273,8 +273,8 @@ public class PlayerMove : MonoBehaviour
     /// </summary>
     void MoveForce()
     {
-        Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody���擾
-        Vector3 force = new Vector3(moveForceX, moveForceY, 0);    // �͂�ݒ�
-        rb.AddForce(force);  // �͂�������
+        Rigidbody rb = this.GetComponent<Rigidbody>();
+        Vector3 force = new Vector3(moveForceX, moveForceY, 0);
+        rb.AddForce(force);
     }
 }
