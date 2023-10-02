@@ -40,12 +40,17 @@ public class Fade_Out : MonoBehaviour
         }
         if (toTitleFadeOut == true)
         {
-            sceneName = "Title";
-            FadeOut();
+            //ここをゲーム終了にしたい。
+            //sceneName = "Title";
+            //デバック終了
+            UnityEditor.EditorApplication.isPlaying = false;
+            //exe上の終了処理
+            Application.Quit();
+           // FadeOut();
         } 
         if (toTutorialFadeOut == true)
         {
-            sceneName = "Tutorial";
+            sceneName = "Tutorial_Stage";
             FadeOut();
         }
         if(toGameOverFadeOut == true)

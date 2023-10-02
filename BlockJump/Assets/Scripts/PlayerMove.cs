@@ -50,6 +50,7 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
+        
         bGM_Manager.Play(0);
         Invoke("StartVoice", 5f);
         rb = GetComponent<Rigidbody>();
@@ -59,6 +60,7 @@ public class PlayerMove : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
 
         Physics.autoSimulation = true;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     void Update()
@@ -249,38 +251,38 @@ public class PlayerMove : MonoBehaviour
         if (other.CompareTag("Voice"))
         {
             sE_Manager.Play(3);
-            textUI.text = "�ǂ�`���ĉ����Ă����܂��傤�B";
+            textUI.text = "壁を伝って下っていきましょう。";
         }
         //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice2"�̂Ƃ�
         if (other.CompareTag("Voice2"))
         {
             sE_Manager.Play(4);
-            textUI.text = "�V���`���Ă��΂₭�ړ��I";
+            textUI.text = "天井を伝ってすばやく移動！";
         }
         //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice_Goal"�̂Ƃ�
         if (other.CompareTag("Voice_Goal"))
         {
             sE_Manager.Play(6);
-            textUI.text = "�S�[�[�[��!";
+            textUI.text = "ゴーーール!";
         }
 
         //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice_Star"�̂Ƃ�
         if (other.CompareTag("Voice_Star"))
         {
             sE_Manager.Play(8);
-            textUI.text = "�ǂ�����ˁc���������������c�H";
+            textUI.text = "壁があるね…星が怪しい感じ…？";
         }
         //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice_Saka"�̂Ƃ�
         if (other.CompareTag("Voice_Saka"))
         {
             sE_Manager.Play(9);
-            textUI.text = "�⓹���I�X�s�[�h���ӁI";
+            textUI.text = "坂道だ！スピード注意！";
         }
 
         if (other.CompareTag("Voice_Kouhann"))
         {
             sE_Manager.Play(2);
-            textUI.text = "�����A�X�e�[�W���㔼��ł��A�撣���Ă��������I";
+            textUI.text = "さあ、ステージも後半戦です、頑張ってください！";
         }
     }
     public void Destroy()
@@ -291,6 +293,10 @@ public class PlayerMove : MonoBehaviour
     }
     public void StartVoice()
     {
+        rb.constraints = RigidbodyConstraints.FreezePositionZ
+        | RigidbodyConstraints.FreezeRotationX
+        | RigidbodyConstraints.FreezeRotationY
+        | RigidbodyConstraints.FreezeRotationZ;
         sE_Manager.Play(7);
     }
     public void GoalAnim()
