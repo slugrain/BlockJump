@@ -4,66 +4,24 @@ using UnityEngine;
 
 public class SE_Manager : MonoBehaviour
 {
-    public static SE_Manager Instance { get => _instance; }
+    public static SE_Manager Instance { get => _instance; } //インスタンスを定義
 
-    static SE_Manager _instance;
+    static SE_Manager _instance; //インスタンスを定義
 
-    public AudioClip[] Audio_Clip_SE;
+    public AudioClip[] Audio_Clip_SE; //AudioClipを定義
 
-    public AudioSource Audio_Source_SE;
-
-    // private bool isWalking = false;
-
+    public AudioSource Audio_Source_SE; //AudioClipを定義
 
     private void Start()
     {
-        _instance = this;
-
+        _instance = this; //インスタンスを代入
     }
 
-    public void Play(int clip)
+    public void Play(int clip) //効果音を再生
     {
         Audio_Source_SE.volume = 1;
         Audio_Source_SE.clip = Audio_Clip_SE[clip];
         Audio_Source_SE.Play();
     }
-
-    public void Stop()
-    {
-        //  StartCoroutine(FadeVolume());
-    }
-    /*
-        private IEnumerator FadeVolume()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(0.01f);
-                Audio_Source_SE.volume -= 0.01f;
-                if (Audio_Source_SE.volume <= 0)
-                    break;
-            }
-            Audio_Source_SE.Stop();
-        }
-    */
-    private void Update()
-    {
-
-        if (Input.GetKeyUp(KeyCode.Z))
-        {
-            Play(0);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Y))
-        {
-            Stop();
-        }
-
-
-
-
-
-    }
-
-
 }
 
