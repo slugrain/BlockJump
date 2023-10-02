@@ -42,13 +42,18 @@ public class PlayerMove : MonoBehaviour
     public bool dash = true;
     public SE_Manager sE_Manager;
     public BGM_Manager bGM_Manager;
+
+    //1002追加分
+    private Vector3 moveForce = Vector3.zero;
+    private int moveForceX;
+    private int moveForceY;
+
     void Start()
     {
         bGM_Manager.Play(0);
         Invoke("StartVoice", 5f);
         rb = GetComponent<Rigidbody>();
         fadeOut = fade.GetComponent<Fade_Out>();
-        //isJumping = fadeOut.clearFadeOut;
         targetPosition = new Vector3(1000, 3.1f, -18);
         sphereCollider.GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
@@ -101,58 +106,45 @@ public class PlayerMove : MonoBehaviour
     
     void FixedUpdate()
     {
+        //  死亡していたら操作を受け付けない
         if (isDead) return;
 
-        if (Input.GetMouseButton(0))// W�L�[�i�O���ړ��j
+        if (Input.GetMouseButton(0))// クリックで浮上
         {
-            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody���擾
-            Vector3 force = new Vector3(0, 30, 0);    // �͂�ݒ�
-            rb.AddForce(force);  // �͂�������
+            moveForceY = 30;
+            MoveForce();
+
+            moveForceY = 0;
         }
 
-        if (Input.GetKey(KeyCode.D))// W�L�[�i�O���ړ��j
+        if (Input.GetKey(KeyCode.D))// 右に移動
         {
-            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody���擾
-            Vector3 force = new Vector3(7, 0, 0);    // �͂�ݒ�
-            rb.AddForce(force);  // �͂�������
-        }
-        
-        if (Input.GetKey(KeyCode.A))// A�L�[�i���ړ�
-        {
-            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody���擾
-            Vector3 force = new Vector3(-7, 0, 0);    // �͂�ݒ�
-            rb.AddForce(force);  // �͂�������
-        }
-        
+            moveForceX = 7;
+            MoveForce();
 
+            moveForceX = 0;
+        }
+        
+        if (Input.GetKey(KeyCode.A))// 左に移動
+        {
+            moveForceX = -7;
+            MoveForce();
+
+            moveForceX = 0;
+        }
     }
-    void OnCollisionEnter(Collision collision)// �̕ǂɏՓ˂����ۂ̔�������
+    void OnCollisionEnter(Collision collision)// 物体に触れたとき
     {
-        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
-        {
-            rb.constraints = RigidbodyConstraints.FreezePositionZ
-            | RigidbodyConstraints.FreezePositionX
-            | RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("�̕ǂ̑��ʂɓ�������");
-          
-        }
-
-        if (collision.gameObject.CompareTag("Bule_Wall_Top"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
+        if (collision.gameObject.CompareTag("Bule_Wall_Side") ||
+            collision.gameObject.CompareTag("Bule_Wall_Top") ||
+            collision.gameObject.CompareTag("Bule_Wall_Under"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionY
             | RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("�̕ǂ̏�ʂɓ�������");
-        }
+            Debug.Log("青壁に触れた");
 
-        if (collision.gameObject.CompareTag("Bule_Wall_Under"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
-        {
-            rb.constraints = RigidbodyConstraints.FreezePositionZ
-            | RigidbodyConstraints.FreezePositionY
-            | RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("�̕ǂ̉��ʂɓ�������");
         }
-
         if (collision.gameObject.CompareTag("Red_Wall_Side"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
         {
             explosion.Play();
@@ -203,8 +195,6 @@ public class PlayerMove : MonoBehaviour
             Debug.Log("�W�����v�p�b�h�I");
             canvasObj.SetActive(false);     
             goalObj.SetActive(true);
-            //voiceText.SetActive(false);
-            goal_Obj.SetActive(true);
         }
 
         if (collision.gameObject.CompareTag("Star"))//�@�Փ˂����ۂ̃^�O��"Star"���������̔���
@@ -315,5 +305,15 @@ public class PlayerMove : MonoBehaviour
     public void GoalFade()
     {
         fadeOut.toClearFadeOut = true;
+    }
+
+    /// <summary>
+    /// プレイヤーを移動させるためのAddForce操作
+    /// </summary>
+    void MoveForce()
+    {
+        Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody���擾
+        Vector3 force = new Vector3(moveForceX, moveForceY, 0);    // �͂�ݒ�
+        rb.AddForce(force);  // �͂�������
     }
 }
