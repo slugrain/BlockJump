@@ -45,7 +45,7 @@ public class Fade_Out : MonoBehaviour
         } 
         if (toTutorialFadeOut == true)
         {
-            sceneName = "Tutorial";
+            sceneName = "Tutorial_Stage";
             FadeOut();
         }
         if(toGameOverFadeOut == true)
