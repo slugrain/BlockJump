@@ -3677,7 +3677,7 @@ MonoBehaviour:
   goal_Camera: {fileID: 2103128867}
   textUI: {fileID: 1988445430}
   canvasObj: {fileID: 1252228897}
-  goalObj: {fileID: 0}
+  goalObj: {fileID: 1902181645}
   star_move: {fileID: 580501850}
   dash_icon: {fileID: 1115353172}
   upjumpPower: 0
