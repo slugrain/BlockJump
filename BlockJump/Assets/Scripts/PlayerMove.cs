@@ -137,15 +137,22 @@ public class PlayerMove : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)// 物体に触れたとき
     {
-        if (collision.gameObject.CompareTag("Bule_Wall_Side") ||
-            collision.gameObject.CompareTag("Bule_Wall_Top") ||
-            collision.gameObject.CompareTag("Bule_Wall_Under"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
+        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionZ
+            | RigidbodyConstraints.FreezePositionX
+            | RigidbodyConstraints.FreezeRotationY;
+            Debug.Log("青の壁の側面に当たった");
+
+        }
+
+        if (collision.gameObject.CompareTag("Bule_Wall_Under") ||
+            collision.gameObject.CompareTag("Bule_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionY
             | RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("青壁に触れた");
-
+            Debug.Log("青の壁の下面に当たった");
         }
         if (collision.gameObject.CompareTag("Red_Wall_Side"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
         {
