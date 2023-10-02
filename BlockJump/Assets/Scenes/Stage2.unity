@@ -3848,7 +3848,7 @@ MonoBehaviour:
   dash_icon: {fileID: 1115353172}
   upjumpPower: 0
   diagonaljumpPower: 0
-  goal: 0
+  isGoal: 0
   isDead: 0
   dash: 1
   sE_Manager: {fileID: 1877805506}
@@ -4848,7 +4848,7 @@ GameObject:
   - component: {fileID: 813561915}
   - component: {fileID: 813561914}
   m_Layer: 5
-  m_Name: Score
+  m_Name: Time Limit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9596,11 +9596,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panelfade: {fileID: 746346903}
-  titlefadeout: 0
-  stagefadeout: 0
-  tutorialFadeOut: 0
-  gameoverFadeOut: 0
-  clearFadeOut: 0
+  toStageFadeOut: 0
+  toTitleFadeOut: 0
+  toTutorialFadeOut: 0
+  toGameOverFadeOut: 0
+  toClearFadeOut: 0
 --- !u!114 &1607848537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11873,6 +11873,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 21568522ca71be540b4a6b9e145409a8, type: 3}
   - {fileID: 8300000, guid: b576aef2320599f49a2da7796b194e74, type: 3}
   - {fileID: 8300000, guid: 95709eea64f8f31448313af2d51640c9, type: 3}
+  - {fileID: 8300000, guid: 2ed3729cf484e054692dcdce77328544, type: 3}
   Audio_Source_SE: {fileID: 1877805507}
 --- !u!82 &1877805507
 AudioSource:

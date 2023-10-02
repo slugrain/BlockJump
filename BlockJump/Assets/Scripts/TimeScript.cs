@@ -39,7 +39,7 @@ public class TimeScript : MonoBehaviour
         leftTime -= Time.deltaTime;
         //�}�C�i�X�͕\�����Ȃ�
         if (leftTime < 0) leftTime = 0;
-        leftTimeText.text = "�c�莞�ԁF" + ((int)leftTime).ToString();
+        leftTimeText.text = "制限時間：" + ((int)leftTime).ToString();
 
         if (leftTime == 0 && se == true)
         {
