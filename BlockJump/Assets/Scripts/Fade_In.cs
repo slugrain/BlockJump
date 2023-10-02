@@ -18,7 +18,7 @@ public class Fade_In : MonoBehaviour
     {
         fadealpha = Panelfade.GetComponent<Image>(); //パネルのイメージ取得
         alpha = fadealpha.color.a;               //パネルのalpha値を取得
-        fadein = false;                           //シーン読み込み時にフェードインさせる
+        fadein = true;                           //シーン読み込み時にフェードインさせる
     }
 
     // Update is called once per frame
