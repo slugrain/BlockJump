@@ -5,14 +5,15 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Fade_Out : MonoBehaviour
 {
-    public GameObject Panelfade;   //�t�F�[�h�p�l���̎擾
+    public GameObject Panelfade;   // フェードパネルの取得
 
-    Image fadealpha;               //�t�F�[�h�p�l���̃C���[�W�擾�ϐ�
+    Image fadealpha;               // 透明度の制御用
 
-    private float alpha;           //�p�l����alpha�l�擾�ϐ�
-    private string sceneName;
+    private float alpha;           // アルファ値の変数
+    
+    private string sceneName;      // 移行したいシーンの名前
 
-    public bool toStageFadeOut;          //�t�F�[�h�A�E�g�̃t���O�ϐ�
+    public bool toStageFadeOut;          // シーン遷移を他スクリプトから使うためのbool型変数
     public bool toTitleFadeOut;
     public bool toTutorialFadeOut;
     public bool toGameOverFadeOut;
@@ -20,9 +21,9 @@ public class Fade_Out : MonoBehaviour
 
     void Start()
     {
-        fadealpha = Panelfade.GetComponent<Image>(); //�p�l���̃C���[�W�擾
-        alpha = fadealpha.color.a;                 //�p�l����alpha�l���擾
-        toStageFadeOut = false;                             //�V�[���ǂݍ��ݎ��Ƀt�F�[�h�C��������
+        fadealpha = Panelfade.GetComponent<Image>();
+        alpha = fadealpha.color.a;
+        toStageFadeOut = false;
         toTitleFadeOut = false;
         toTutorialFadeOut = false;
         toGameOverFadeOut = false;
@@ -60,9 +61,11 @@ public class Fade_Out : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// フェードアウトの処理。変数sceneNameに遷移先のシーンの名前を代入する。
+    /// </summary>
     public void FadeOut()
     {
-
         alpha += 0.01f;
         fadealpha.color = new Color(0, 0, 0, alpha);
         if (alpha >= 1)
@@ -72,6 +75,7 @@ public class Fade_Out : MonoBehaviour
         }
     }
 
+    //  ここから各フェードのbool処理
     public void ToTitleFadeTrue()
     {
         toTitleFadeOut = true;

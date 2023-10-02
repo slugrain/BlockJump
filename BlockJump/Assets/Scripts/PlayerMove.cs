@@ -28,18 +28,14 @@ public class PlayerMove : MonoBehaviour
 
     public GameObject canvasObj;
     public GameObject goalObj;
-    // public GameObject voiceText;
     Vector3 targetPosition;
     public Star_Move star_move;
     public Dash_Icon dash_icon;
     public float upjumpPower;
     public float diagonaljumpPower;
-    //private bool isJumping = false;
-    //private bool diagonalJamp = false;
-    //private float xPos;
     public bool isGoal = false;
     public bool isDead = false;
-    public bool dash = true;
+    public bool isDashCoolDown = true;
     public SE_Manager sE_Manager;
     public BGM_Manager bGM_Manager;
 
@@ -50,9 +46,10 @@ public class PlayerMove : MonoBehaviour
 
     void Start()
     {
-        
+        //  開始時にBGMを流し始める処理
         bGM_Manager.Play(0);
         Invoke("StartVoice", 5f);
+
         rb = GetComponent<Rigidbody>();
         fadeOut = fade.GetComponent<Fade_Out>();
         targetPosition = new Vector3(1000, 3.1f, -18);
@@ -65,43 +62,43 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        //  死亡時は操作を受け付けない
         if(isDead)return;
-
+        //  常に回転するように
         transform.Rotate(0, 0, -720 * Time.deltaTime);
 
-        if (dash == true) 
+        //  ダッシュがクールタイム中なら使えない
+        if (isDashCoolDown == true) 
         {
-            if (Input.GetMouseButtonUp(1))// W�L�[�i�O���ړ��j
+            if (Input.GetMouseButtonDown(1))        // 左クリックをし始めたらエフェクト再生
             {
-                rb.AddForce(new Vector3(70, 0, 0), ForceMode.VelocityChange);
-                spark.Stop();
-                sE_Manager.Play(1);
-                dash_icon.CTuse();
-                Debug.Log("Dash");
-            }
-
-            if (Input.GetMouseButton(1))// W�L�[�i�O���ړ��j
-            {
-                transform.Rotate(0, 0, -360 * Time.deltaTime);
-                //spark.Play();
-                //Debug.Log("SpinUp");
-            }
-
-            if (Input.GetMouseButtonDown(1))// W�L�[�i�O���ړ��j
-            {
-                transform.Rotate(0, 0, -360 * Time.deltaTime);
                 spark.Play();
-                Debug.Log("SpinUp");
+            }
+
+            if (Input.GetMouseButton(1))        // 押し続けている時に高速回転し続ける
+            {
+                transform.Rotate(0, 0, -360 * Time.deltaTime);
+            }
+
+            if (Input.GetMouseButtonUp(1))      // クリックを離したら
+            {
+                //  右に吹っ飛ばす
+                rb.AddForce(new Vector3(70, 0, 0), ForceMode.VelocityChange);
+                //  エフェクトを止める
+                spark.Stop();
+                //  SEを再生する
+                sE_Manager.Play(1);
+
+                dash_icon.CTuse();
             }
         }
 
-        if (isGoal == true)// W�L�[�i�O���ړ��j
+        //  ゴールしたら動きを止めて、3秒後にアニメーションを再生
+        if (isGoal == true)
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             transform.Rotate(0, 0, -720 * Time.deltaTime);
             Invoke("GoalAnim", 3f);
-
-            Debug.Log("go");
         }
     }
 
@@ -137,7 +134,8 @@ public class PlayerMove : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)// 物体に触れたとき
     {
-        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        //　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        if (collision.gameObject.CompareTag("Bule_Wall_Side"))
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionX
@@ -147,69 +145,46 @@ public class PlayerMove : MonoBehaviour
         }
 
         if (collision.gameObject.CompareTag("Bule_Wall_Under") ||
-            collision.gameObject.CompareTag("Bule_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+            collision.gameObject.CompareTag("Bule_Wall_Top"))
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionY
             | RigidbodyConstraints.FreezeRotationY;
             Debug.Log("青の壁の下面に当たった");
         }
-        if (collision.gameObject.CompareTag("Red_Wall_Side"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
+
+        if (collision.gameObject.CompareTag("Red_Wall"))// 衝突した際の壁が"Red_Wall"タグだった時の判定
         {
             explosion.Play();
             Invoke("Destroy", 0.1f);
-            Debug.Log("�̕ǂ̑��ʂɓ�������");
             isDead = true;
             Physics.autoSimulation = false;
         }
 
-        if (collision.gameObject.CompareTag("Red_Wall_Top"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
-        {
-            explosion.Play();
-            Invoke("Destroy", 0.1f);
-            Debug.Log("�̕ǂ̏�ʂɓ�������");
-            isDead = true;
-            Physics.autoSimulation = false;
-        }
-
-        if (collision.gameObject.CompareTag("Red_Wall_Under"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
-        {
-            explosion.Play();
-            Invoke("Destroy", 0.1f);
-            Debug.Log("�̕ǂ̉��ʂɓ�������");
-            isDead = true;
-            Physics.autoSimulation = false;
-        }
-        
-
-        if (collision.gameObject.CompareTag("Key_Wall"))//�@�Փ˂����ۂ̕ǂ�"Key_Wall"�^�O���������̔���
+        if (collision.gameObject.CompareTag("Key_Wall"))// 星で破壊できる壁にめり込んで無理やり進めないようにする
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezeRotationX
             | RigidbodyConstraints.FreezeRotationY
             | RigidbodyConstraints.FreezeRotationZ;
-            Debug.Log("�ʂ�Ȃ��I");
         }
 
-        if (collision.gameObject.CompareTag("Jamp_Pad"))//�@�Փ˂����ۂ̕ǂ�"Bule_Wall"�^�O���������̔���
+        if (collision.gameObject.CompareTag("Jamp_Pad"))// ゴールに触れたとき
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
-          //| RigidbodyConstraints.FreezePositionY
           | RigidbodyConstraints.FreezeRotationY;
-            //isDead = true;
             isGoal = true;
             Invoke("GoalFade", 6f);
             goalspark.Play();
             goal_Camera.GoalCamera();
-            Debug.Log("�W�����v�p�b�h�I");
+            //  UIを消して、Goalテキストを出す
             canvasObj.SetActive(false);     
             goalObj.SetActive(true);
         }
 
-        if (collision.gameObject.CompareTag("Star"))//�@�Փ˂����ۂ̃^�O��"Star"���������̔���
+        if (collision.gameObject.CompareTag("Star"))// 星に触れたとき
         {
             star_move.StarGet();
-            Debug.Log("Star Get");
         }
 
         if (collision.gameObject.CompareTag("Floor"))
@@ -218,74 +193,48 @@ public class PlayerMove : MonoBehaviour
         | RigidbodyConstraints.FreezeRotationX
         | RigidbodyConstraints.FreezeRotationY
         | RigidbodyConstraints.FreezeRotationZ;
-
-            Debug.Log("yuka");
         }
     }
 
-    void OnCollisionExit(Collision collision)// �̕ǂ��痣�ꂽ�ۂ̔�������
+    void OnCollisionExit(Collision collision)// 青壁から離れる時の処理
     {
-        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//�@���ꂽ�ǂ�"Bule_Wall"�^�O���������̔���
+        if (collision.gameObject.CompareTag("Bule_Wall_Side") ||
+            collision.gameObject.CompareTag("Bule_Wall_Under") ||
+            collision.gameObject.CompareTag("Bule_Wall_Top"))
         {
-            //FreezePositionXYZ�S�Ă��I���ɂ���
             rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationY���I���ɂ���
             rb.constraints = RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("�̕ǂ��痣�ꂽ");
         }
-        if (collision.gameObject.CompareTag("Bule_Wall_Top"))//�@���ꂽ�ǂ�"Bule_Wall"�^�O���������̔���
-        {
-            //FreezePositionXYZ�S�Ă��I���ɂ���
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationY���I���ɂ���
-            rb.constraints = RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("�̕ǂ��痣�ꂽ");
-        }
-        if (collision.gameObject.CompareTag("Bule_Wall_Under"))//�@���ꂽ�ǂ�"Bule_Wall"�^�O���������̔���
-        {
-            //FreezePositionXYZ�S�Ă��I���ɂ���
-            rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationY���I���ɂ���
-            rb.constraints = RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("�̕ǂ��痣�ꂽ");
-        }
-
     }
 
+    //  ボイス再生制御
     void OnTriggerEnter(Collider other)
     {
-        //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice"�̂Ƃ�
         if (other.CompareTag("Voice"))
         {
             sE_Manager.Play(3);
             textUI.text = "壁を伝って下っていきましょう。";
         }
-        //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice2"�̂Ƃ�
         if (other.CompareTag("Voice2"))
         {
             sE_Manager.Play(4);
             textUI.text = "天井を伝ってすばやく移動！";
         }
-        //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice_Goal"�̂Ƃ�
         if (other.CompareTag("Voice_Goal"))
         {
             sE_Manager.Play(6);
             textUI.text = "ゴーーール!";
         }
-
-        //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice_Star"�̂Ƃ�
         if (other.CompareTag("Voice_Star"))
         {
             sE_Manager.Play(8);
             textUI.text = "壁があるね…星が怪しい感じ…？";
         }
-        //�ڐG�����I�u�W�F�N�g�̃^�O��"Voice_Saka"�̂Ƃ�
         if (other.CompareTag("Voice_Saka"))
         {
             sE_Manager.Play(9);
             textUI.text = "坂道だ！スピード注意！";
         }
-
         if (other.CompareTag("Voice_Kouhann"))
         {
             sE_Manager.Play(2);
@@ -313,7 +262,6 @@ public class PlayerMove : MonoBehaviour
        | RigidbodyConstraints.FreezeRotationY;
         transform.position =
           Vector3.MoveTowards(transform.position, targetPosition, 0.2f);
-        Debug.Log("�S�[�����o");
     }
     public void GoalFade()
     {

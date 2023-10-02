@@ -30,7 +30,7 @@ public class Dash_Icon : MonoBehaviour
   
             if (image.fillAmount == 1f)// fillAmountが1になるかの判定
             {
-                playerMove.dash = true;// PlayerMoveのdashをtrueにして再度ダッシュ可能にする
+                playerMove.isDashCoolDown = true;// PlayerMoveのdashをtrueにして再度ダッシュ可能にする
                 Debug.Log("Cool_Time_Back");
             }
         }
@@ -43,7 +43,7 @@ public class Dash_Icon : MonoBehaviour
         cool_Time = 5.0f; // アイコン内のクールタイムの時間を代入する
         image.fillAmount = 0f;// fillの初期化
         dash_Cool_Time = true;// クールタイムを開始させる
-        playerMove.dash = false;// ダッシュを一定時間禁止させる
+        playerMove.isDashCoolDown = false;// ダッシュを一定時間禁止させる
         Debug.Log("public void CTuse");
     }
 }

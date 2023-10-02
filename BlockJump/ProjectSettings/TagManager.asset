@@ -9,7 +9,6 @@ TagManager:
   - Bule_Wall_Under
   - Floor
   - TAZOFX
-  - Red_Wall_Top
   - Red_Wall_Side
   - Red_Wall_Under
   - Walp_Point
@@ -29,6 +28,7 @@ TagManager:
   - Voice_move_Left_Tutorial
   - Voice_Blue_Wall
   - Voice_Dash_Tutorial2
+  - Red_Wall
   layers:
   - Default
   - TransparentFX
