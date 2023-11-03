@@ -11,6 +11,7 @@ public class Star_Move : MonoBehaviour
     Rigidbody rb;
     public ParticleSystem ep;
     public GameObject star;
+    public SE_Manager manager;
 
     private void Start()
     {
@@ -37,6 +38,7 @@ public class Star_Move : MonoBehaviour
 
     public void StarGet()
     {
+        manager.Play(12);
         targetPosition = new Vector3(-35, 20, 10);
         acceleration =true;
         Invoke("DelayStar", 2f);
@@ -63,6 +65,7 @@ public class Star_Move : MonoBehaviour
             ep.Play();
             rb.constraints = RigidbodyConstraints.FreezeAll;
             Invoke("DelayStarDestry", 2f);
+            manager.Play(5);
             Debug.Log("Key_Wall_Destry");
         }
     }

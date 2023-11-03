@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Fade_Out : MonoBehaviour
 {
-    public GameObject Panelfade;   //ƒtƒF[ƒhƒpƒlƒ‹‚Ìæ“¾
+    public GameObject Panelfade;   //ï¿½tï¿½Fï¿½[ï¿½hï¿½pï¿½lï¿½ï¿½ï¿½Ìæ“¾
 
-    Image fadealpha;               //ƒtƒF[ƒhƒpƒlƒ‹‚ÌƒCƒ[ƒWæ“¾•Ï”
+    Image fadealpha;               //ï¿½tï¿½Fï¿½[ï¿½hï¿½pï¿½lï¿½ï¿½ï¿½ÌƒCï¿½ï¿½ï¿½[ï¿½Wï¿½æ“¾ï¿½Ïï¿½
 
-    private float alpha;           //ƒpƒlƒ‹‚Ìalpha’læ“¾•Ï”
+    private float alpha;           //ï¿½pï¿½lï¿½ï¿½ï¿½ï¿½alphaï¿½lï¿½æ“¾ï¿½Ïï¿½
     private string sceneName;
 
-    public bool toStageFadeOut;          //ƒtƒF[ƒhƒAƒEƒg‚Ìƒtƒ‰ƒO•Ï”
+    public bool toStageFadeOut;          //ï¿½tï¿½Fï¿½[ï¿½hï¿½Aï¿½Eï¿½gï¿½Ìƒtï¿½ï¿½ï¿½Oï¿½Ïï¿½
     public bool toTitleFadeOut;
     public bool toTutorialFadeOut;
     public bool toGameOverFadeOut;
@@ -20,9 +20,9 @@ public class Fade_Out : MonoBehaviour
 
     void Start()
     {
-        fadealpha = Panelfade.GetComponent<Image>(); //ƒpƒlƒ‹‚ÌƒCƒ[ƒWæ“¾
-        alpha = fadealpha.color.a;                 //ƒpƒlƒ‹‚Ìalpha’l‚ğæ“¾
-        toStageFadeOut = false;                             //ƒV[ƒ““Ç‚İ‚İ‚ÉƒtƒF[ƒhƒCƒ“‚³‚¹‚é
+        fadealpha = Panelfade.GetComponent<Image>(); //ï¿½pï¿½lï¿½ï¿½ï¿½ÌƒCï¿½ï¿½ï¿½[ï¿½Wï¿½æ“¾
+        alpha = fadealpha.color.a;                 //ï¿½pï¿½lï¿½ï¿½ï¿½ï¿½alphaï¿½lï¿½ï¿½ï¿½æ“¾
+        toStageFadeOut = false;                             //ï¿½Vï¿½[ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½İï¿½ï¿½Éƒtï¿½Fï¿½[ï¿½hï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         toTitleFadeOut = false;
         toTutorialFadeOut = false;
         toGameOverFadeOut = false;
@@ -45,7 +45,7 @@ public class Fade_Out : MonoBehaviour
         } 
         if (toTutorialFadeOut == true)
         {
-            sceneName = "Tutorial";
+            sceneName = "Tutorial_Stage";
             FadeOut();
         }
         if(toGameOverFadeOut == true)

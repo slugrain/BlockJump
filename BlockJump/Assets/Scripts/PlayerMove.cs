@@ -16,6 +16,10 @@ public class PlayerMove : MonoBehaviour
     public GameObject player;
     [SerializeField]
     public GameObject fade;
+    [SerializeField]
+    private SphereCollider sphereCollider;
+    [SerializeField]
+    private MeshRenderer meshRenderer;
 
     public Goal_Camera goal_Camera;
     Fade_Out fadeOut;
@@ -27,23 +31,36 @@ public class PlayerMove : MonoBehaviour
     // public GameObject voiceText;
     Vector3 targetPosition;
     public Star_Move star_move;
+    public Dash_Icon dash_icon;
     public float upjumpPower;
     public float diagonaljumpPower;
-    private bool isJumping = false;
-    private bool diagonalJamp = false;
-    private float xPos;
+    //private bool isJumping = false;
+    //private bool diagonalJamp = false;
+    //private float xPos;
     public bool isGoal = false;
     public bool isDead = false;
+    public bool dash = true;
     public SE_Manager sE_Manager;
+    public BGM_Manager bGM_Manager;
+
+    //1002è¿½åŠ åˆ†
+    private Vector3 moveForce = Vector3.zero;
+    private int moveForceX;
+    private int moveForceY;
+
     void Start()
     {
-        Invoke("StartVoice", 1.5f);
+        
+        bGM_Manager.Play(0);
+        Invoke("StartVoice", 5f);
         rb = GetComponent<Rigidbody>();
         fadeOut = fade.GetComponent<Fade_Out>();
-        //isJumping = fadeOut.clearFadeOut;
         targetPosition = new Vector3(1000, 3.1f, -18);
+        sphereCollider.GetComponent<Collider>();
+        meshRenderer = GetComponent<MeshRenderer>();
 
         Physics.autoSimulation = true;
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     void Update()
@@ -52,34 +69,38 @@ public class PlayerMove : MonoBehaviour
 
         transform.Rotate(0, 0, -720 * Time.deltaTime);
 
-        if (Input.GetMouseButtonUp(1))// WƒL[i‘O•ûˆÚ“®j
+        if (dash == true) 
         {
-            rb.AddForce(new Vector3(60, 0, 0), ForceMode.VelocityChange);
-            spark.Stop();
-            sE_Manager.Play(1);
-            Debug.Log("Dash");
+            if (Input.GetMouseButtonUp(1))// Wï¿½Lï¿½[ï¿½iï¿½Oï¿½ï¿½ï¿½Ú“ï¿½ï¿½j
+            {
+                rb.AddForce(new Vector3(70, 0, 0), ForceMode.VelocityChange);
+                spark.Stop();
+                sE_Manager.Play(1);
+                dash_icon.CTuse();
+                Debug.Log("Dash");
+            }
+
+            if (Input.GetMouseButton(1))// Wï¿½Lï¿½[ï¿½iï¿½Oï¿½ï¿½ï¿½Ú“ï¿½ï¿½j
+            {
+                transform.Rotate(0, 0, -360 * Time.deltaTime);
+                //spark.Play();
+                //Debug.Log("SpinUp");
+            }
+
+            if (Input.GetMouseButtonDown(1))// Wï¿½Lï¿½[ï¿½iï¿½Oï¿½ï¿½ï¿½Ú“ï¿½ï¿½j
+            {
+                transform.Rotate(0, 0, -360 * Time.deltaTime);
+                spark.Play();
+                Debug.Log("SpinUp");
+            }
         }
 
-        if (Input.GetMouseButton(1))// WƒL[i‘O•ûˆÚ“®j
-        {
-            transform.Rotate(0, 0, -360 * Time.deltaTime);
-            //spark.Play();
-            //Debug.Log("SpinUp");
-        }
-
-        if (Input.GetMouseButtonDown(1))// WƒL[i‘O•ûˆÚ“®j
-        {
-            transform.Rotate(0, 0, -360 * Time.deltaTime);
-            spark.Play();
-            Debug.Log("SpinUp");
-        }
-
-        if (isGoal == true)// WƒL[i‘O•ûˆÚ“®j
+        if (isGoal == true)// Wï¿½Lï¿½[ï¿½iï¿½Oï¿½ï¿½ï¿½Ú“ï¿½ï¿½j
         {
             rb.constraints = RigidbodyConstraints.FreezeAll;
             transform.Rotate(0, 0, -720 * Time.deltaTime);
             Invoke("GoalAnim", 3f);
-          
+
             Debug.Log("go");
         }
     }
@@ -87,96 +108,90 @@ public class PlayerMove : MonoBehaviour
     
     void FixedUpdate()
     {
+        //  æ­»äº¡ã—ã¦ã„ãŸã‚‰æ“ä½œã‚’å—ã‘ä»˜ã‘ãªã„
         if (isDead) return;
 
-        if (Input.GetMouseButton(0))// WƒL[i‘O•ûˆÚ“®j
+        if (Input.GetMouseButton(0))// ã‚¯ãƒªãƒƒã‚¯ã§æµ®ä¸Š
         {
-            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody‚ğæ“¾
-            Vector3 force = new Vector3(0, 30, 0);    // —Í‚ğİ’è
-            rb.AddForce(force);  // —Í‚ğ‰Á‚¦‚é
+            moveForceY = 30;
+            MoveForce();
+
+            moveForceY = 0;
         }
 
-        if (Input.GetKey(KeyCode.D))// WƒL[i‘O•ûˆÚ“®j
+        if (Input.GetKey(KeyCode.D))// å³ã«ç§»å‹•
         {
-            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody‚ğæ“¾
-            Vector3 force = new Vector3(7, 0, 0);    // —Í‚ğİ’è
-            rb.AddForce(force);  // —Í‚ğ‰Á‚¦‚é
-        }
-        
-        if (Input.GetKey(KeyCode.A))// AƒL[i¶ˆÚ“®
-        {
-            Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbody‚ğæ“¾
-            Vector3 force = new Vector3(-7, 0, 0);    // —Í‚ğİ’è
-            rb.AddForce(force);  // —Í‚ğ‰Á‚¦‚é
-        }
-        
+            moveForceX = 7;
+            MoveForce();
 
+            moveForceX = 0;
+        }
+        
+        if (Input.GetKey(KeyCode.A))// å·¦ã«ç§»å‹•
+        {
+            moveForceX = -7;
+            MoveForce();
+
+            moveForceX = 0;
+        }
     }
-    void OnCollisionEnter(Collision collision)// Â‚Ì•Ç‚ÉÕ“Ë‚µ‚½Û‚Ì”»’è‚ğæ‚é
+    void OnCollisionEnter(Collision collision)// ç‰©ä½“ã«è§¦ã‚ŒãŸã¨ã
     {
-        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//@Õ“Ë‚µ‚½Û‚Ì•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//ã€€è¡çªã—ãŸéš›ã®å£ãŒ"Bule_Wall"ã‚¿ã‚°ã ã£ãŸæ™‚ã®åˆ¤å®š
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionX
             | RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("Â‚Ì•Ç‚Ì‘¤–Ê‚É“–‚½‚Á‚½");
-          
+            Debug.Log("é’ã®å£ã®å´é¢ã«å½“ãŸã£ãŸ");
+
         }
 
-        if (collision.gameObject.CompareTag("Bule_Wall_Top"))//@Õ“Ë‚µ‚½Û‚Ì•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Bule_Wall_Under") ||
+            collision.gameObject.CompareTag("Bule_Wall_Top"))//ã€€è¡çªã—ãŸéš›ã®å£ãŒ"Bule_Wall"ã‚¿ã‚°ã ã£ãŸæ™‚ã®åˆ¤å®š
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionY
             | RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("Â‚Ì•Ç‚Ìã–Ê‚É“–‚½‚Á‚½");
+            Debug.Log("é’ã®å£ã®ä¸‹é¢ã«å½“ãŸã£ãŸ");
         }
-
-        if (collision.gameObject.CompareTag("Bule_Wall_Under"))//@Õ“Ë‚µ‚½Û‚Ì•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
-        {
-            rb.constraints = RigidbodyConstraints.FreezePositionZ
-            | RigidbodyConstraints.FreezePositionY
-            | RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("Â‚Ì•Ç‚Ì‰º–Ê‚É“–‚½‚Á‚½");
-        }
-
-        if (collision.gameObject.CompareTag("Red_Wall_Side"))//@Õ“Ë‚µ‚½Û‚Ì•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Red_Wall_Side"))//ï¿½@ï¿½Õ“Ë‚ï¿½ï¿½ï¿½ï¿½Û‚Ì•Ç‚ï¿½"Bule_Wall"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
             explosion.Play();
             Invoke("Destroy", 0.1f);
-            Debug.Log("Â‚Ì•Ç‚Ì‘¤–Ê‚É“–‚½‚Á‚½");
+            Debug.Log("ï¿½Â‚Ì•Ç‚Ì‘ï¿½ï¿½Ê‚É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             isDead = true;
             Physics.autoSimulation = false;
         }
 
-        if (collision.gameObject.CompareTag("Red_Wall_Top"))//@Õ“Ë‚µ‚½Û‚Ì•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Red_Wall_Top"))//ï¿½@ï¿½Õ“Ë‚ï¿½ï¿½ï¿½ï¿½Û‚Ì•Ç‚ï¿½"Bule_Wall"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
             explosion.Play();
             Invoke("Destroy", 0.1f);
-            Debug.Log("Â‚Ì•Ç‚Ìã–Ê‚É“–‚½‚Á‚½");
+            Debug.Log("ï¿½Â‚Ì•Ç‚Ìï¿½Ê‚É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             isDead = true;
             Physics.autoSimulation = false;
         }
 
-        if (collision.gameObject.CompareTag("Red_Wall_Under"))//@Õ“Ë‚µ‚½Û‚Ì•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Red_Wall_Under"))//ï¿½@ï¿½Õ“Ë‚ï¿½ï¿½ï¿½ï¿½Û‚Ì•Ç‚ï¿½"Bule_Wall"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
             explosion.Play();
             Invoke("Destroy", 0.1f);
-            Debug.Log("Â‚Ì•Ç‚Ì‰º–Ê‚É“–‚½‚Á‚½");
+            Debug.Log("ï¿½Â‚Ì•Ç‚Ì‰ï¿½ï¿½Ê‚É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
             isDead = true;
             Physics.autoSimulation = false;
         }
         
 
-        if (collision.gameObject.CompareTag("Key_Wall"))//@Õ“Ë‚µ‚½Û‚Ì•Ç‚ª"Key_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Key_Wall"))//ï¿½@ï¿½Õ“Ë‚ï¿½ï¿½ï¿½ï¿½Û‚Ì•Ç‚ï¿½"Key_Wall"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezeRotationX
             | RigidbodyConstraints.FreezeRotationY
             | RigidbodyConstraints.FreezeRotationZ;
-            Debug.Log("’Ê‚ê‚È‚¢I");
+            Debug.Log("ï¿½Ê‚ï¿½È‚ï¿½ï¿½I");
         }
 
-        if (collision.gameObject.CompareTag("Jamp_Pad"))//@Õ“Ë‚µ‚½Û‚Ì•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Jamp_Pad"))//ï¿½@ï¿½Õ“Ë‚ï¿½ï¿½ï¿½ï¿½Û‚Ì•Ç‚ï¿½"Bule_Wall"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
             rb.constraints = RigidbodyConstraints.FreezePositionZ
           //| RigidbodyConstraints.FreezePositionY
@@ -186,23 +201,15 @@ public class PlayerMove : MonoBehaviour
             Invoke("GoalFade", 6f);
             goalspark.Play();
             goal_Camera.GoalCamera();
-            Debug.Log("ƒWƒƒƒ“ƒvƒpƒbƒhI");
+            Debug.Log("ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½vï¿½pï¿½bï¿½hï¿½I");
             canvasObj.SetActive(false);     
             goalObj.SetActive(true);
-            //voiceText.SetActive(false);
         }
 
-        if (collision.gameObject.CompareTag("Star"))//@Õ“Ë‚µ‚½Û‚Ìƒ^ƒO‚ª"Star"‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Star"))//ï¿½@ï¿½Õ“Ë‚ï¿½ï¿½ï¿½ï¿½Û‚Ìƒ^ï¿½Oï¿½ï¿½"Star"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
             star_move.StarGet();
             Debug.Log("Star Get");
-        }
-
-        
-        if (collision.gameObject.CompareTag("Walp_Point"))
-        {
-            
-            Debug.Log("yuka");
         }
 
         if (collision.gameObject.CompareTag("Floor"))
@@ -216,83 +223,87 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision collision)// Â‚Ì•Ç‚©‚ç—£‚ê‚½Û‚Ì”»’è‚ğæ‚é
+    void OnCollisionExit(Collision collision)// ï¿½Â‚Ì•Ç‚ï¿½ï¿½ç—£ï¿½ê‚½ï¿½Û‚Ì”ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
-        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//@—£‚ê‚½•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//ï¿½@ï¿½ï¿½ï¿½ê‚½ï¿½Ç‚ï¿½"Bule_Wall"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
-            //FreezePositionXYZ‘S‚Ä‚ğƒIƒ“‚É‚·‚é
+            //FreezePositionXYZï¿½Sï¿½Ä‚ï¿½ï¿½Iï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½
             rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationY‚ğƒIƒ“‚É‚·‚é
+            //FreezeRotationYï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½
             rb.constraints = RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("Â‚Ì•Ç‚©‚ç—£‚ê‚½");
+            Debug.Log("ï¿½Â‚Ì•Ç‚ï¿½ï¿½ç—£ï¿½ê‚½");
         }
-        if (collision.gameObject.CompareTag("Bule_Wall_Top"))//@—£‚ê‚½•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Bule_Wall_Top"))//ï¿½@ï¿½ï¿½ï¿½ê‚½ï¿½Ç‚ï¿½"Bule_Wall"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
-            //FreezePositionXYZ‘S‚Ä‚ğƒIƒ“‚É‚·‚é
+            //FreezePositionXYZï¿½Sï¿½Ä‚ï¿½ï¿½Iï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½
             rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationY‚ğƒIƒ“‚É‚·‚é
+            //FreezeRotationYï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½
             rb.constraints = RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("Â‚Ì•Ç‚©‚ç—£‚ê‚½");
+            Debug.Log("ï¿½Â‚Ì•Ç‚ï¿½ï¿½ç—£ï¿½ê‚½");
         }
-        if (collision.gameObject.CompareTag("Bule_Wall_Under"))//@—£‚ê‚½•Ç‚ª"Bule_Wall"ƒ^ƒO‚¾‚Á‚½‚Ì”»’è
+        if (collision.gameObject.CompareTag("Bule_Wall_Under"))//ï¿½@ï¿½ï¿½ï¿½ê‚½ï¿½Ç‚ï¿½"Bule_Wall"ï¿½^ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì”ï¿½ï¿½ï¿½
         {
-            //FreezePositionXYZ‘S‚Ä‚ğƒIƒ“‚É‚·‚é
+            //FreezePositionXYZï¿½Sï¿½Ä‚ï¿½ï¿½Iï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½
             rb.constraints = RigidbodyConstraints.FreezePosition;
-            //FreezeRotationY‚ğƒIƒ“‚É‚·‚é
+            //FreezeRotationYï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½É‚ï¿½ï¿½ï¿½
             rb.constraints = RigidbodyConstraints.FreezeRotationY;
-            Debug.Log("Â‚Ì•Ç‚©‚ç—£‚ê‚½");
+            Debug.Log("ï¿½Â‚Ì•Ç‚ï¿½ï¿½ç—£ï¿½ê‚½");
         }
 
     }
 
     void OnTriggerEnter(Collider other)
     {
-        //ÚG‚µ‚½ƒIƒuƒWƒFƒNƒg‚Ìƒ^ƒO‚ª"Voice"‚Ì‚Æ‚«
+        //ï¿½ÚGï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìƒ^ï¿½Oï¿½ï¿½"Voice"ï¿½Ì‚Æ‚ï¿½
         if (other.CompareTag("Voice"))
         {
             sE_Manager.Play(3);
-            textUI.text = "•Ç‚ğ“`‚Á‚Ä‰º‚Á‚Ä‚¢‚«‚Ü‚µ‚å‚¤B";
+            textUI.text = "å£ã‚’ä¼ã£ã¦ä¸‹ã£ã¦ã„ãã¾ã—ã‚‡ã†ã€‚";
         }
-        //ÚG‚µ‚½ƒIƒuƒWƒFƒNƒg‚Ìƒ^ƒO‚ª"Voice2"‚Ì‚Æ‚«
+        //ï¿½ÚGï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìƒ^ï¿½Oï¿½ï¿½"Voice2"ï¿½Ì‚Æ‚ï¿½
         if (other.CompareTag("Voice2"))
         {
             sE_Manager.Play(4);
-            textUI.text = "“Vˆä‚ğ“`‚Á‚Ä‚·‚Î‚â‚­ˆÚ“®I";
+            textUI.text = "å¤©äº•ã‚’ä¼ã£ã¦ã™ã°ã‚„ãç§»å‹•ï¼";
         }
-        //ÚG‚µ‚½ƒIƒuƒWƒFƒNƒg‚Ìƒ^ƒO‚ª"Voice_Goal"‚Ì‚Æ‚«
+        //ï¿½ÚGï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìƒ^ï¿½Oï¿½ï¿½"Voice_Goal"ï¿½Ì‚Æ‚ï¿½
         if (other.CompareTag("Voice_Goal"))
         {
             sE_Manager.Play(6);
-            textUI.text = "ƒS[[[ƒ‹!";
+            textUI.text = "ã‚´ãƒ¼ãƒ¼ãƒ¼ãƒ«!";
         }
 
-        //ÚG‚µ‚½ƒIƒuƒWƒFƒNƒg‚Ìƒ^ƒO‚ª"Voice_Star"‚Ì‚Æ‚«
+        //ï¿½ÚGï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìƒ^ï¿½Oï¿½ï¿½"Voice_Star"ï¿½Ì‚Æ‚ï¿½
         if (other.CompareTag("Voice_Star"))
         {
             sE_Manager.Play(8);
-            textUI.text = "•Ç‚ª‚ ‚é‚Ëc¯‚ª‰ö‚µ‚¢Š´‚¶cH";
+            textUI.text = "å£ãŒã‚ã‚‹ã­â€¦æ˜ŸãŒæ€ªã—ã„æ„Ÿã˜â€¦ï¼Ÿ";
         }
-        //ÚG‚µ‚½ƒIƒuƒWƒFƒNƒg‚Ìƒ^ƒO‚ª"Voice_Saka"‚Ì‚Æ‚«
+        //ï¿½ÚGï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ìƒ^ï¿½Oï¿½ï¿½"Voice_Saka"ï¿½Ì‚Æ‚ï¿½
         if (other.CompareTag("Voice_Saka"))
         {
             sE_Manager.Play(9);
-            textUI.text = "â“¹‚¾IƒXƒs[ƒh’ˆÓI";
+            textUI.text = "å‚é“ã ï¼ã‚¹ãƒ”ãƒ¼ãƒ‰æ³¨æ„ï¼";
         }
 
         if (other.CompareTag("Voice_Kouhann"))
         {
             sE_Manager.Play(2);
-            textUI.text = "‚³‚ AƒXƒe[ƒW‚àŒã”¼í‚Å‚·AŠæ’£‚Á‚Ä‚­‚¾‚³‚¢I";
+            textUI.text = "ã•ã‚ã€ã‚¹ãƒ†ãƒ¼ã‚¸ã‚‚å¾ŒåŠæˆ¦ã§ã™ã€é ‘å¼µã£ã¦ãã ã•ã„ï¼";
         }
     }
     public void Destroy()
     {
-        //player.SetActive(false);
+        meshRenderer.enabled = false;
         isDead = true;
-        sE_Manager.Play(5);
+        sE_Manager.Play(5);      
     }
     public void StartVoice()
     {
+        rb.constraints = RigidbodyConstraints.FreezePositionZ
+        | RigidbodyConstraints.FreezeRotationX
+        | RigidbodyConstraints.FreezeRotationY
+        | RigidbodyConstraints.FreezeRotationZ;
         sE_Manager.Play(7);
     }
     public void GoalAnim()
@@ -302,10 +313,20 @@ public class PlayerMove : MonoBehaviour
        | RigidbodyConstraints.FreezeRotationY;
         transform.position =
           Vector3.MoveTowards(transform.position, targetPosition, 0.2f);
-        Debug.Log("ƒS[ƒ‹‰‰o");
+        Debug.Log("ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½o");
     }
     public void GoalFade()
     {
         fadeOut.toClearFadeOut = true;
+    }
+
+    /// <summary>
+    /// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç§»å‹•ã•ã›ã‚‹ãŸã‚ã®AddForceæ“ä½œ
+    /// </summary>
+    void MoveForce()
+    {
+        Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyï¿½ï¿½ï¿½æ“¾
+        Vector3 force = new Vector3(moveForceX, moveForceY, 0);    // ï¿½Í‚ï¿½İ’ï¿½
+        rb.AddForce(force);  // ï¿½Í‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 }
