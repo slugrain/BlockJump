@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class Key_Wall_Destry : MonoBehaviour
 {
+    /// <summary>
+    /// インスペクターから参照
+    /// </summary>
     public GameObject wall;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // 星にぶつかったら自らを破壊する
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Star"))//　衝突した際のタグが"Star"だった時の判定

@@ -5,6 +5,9 @@ using static UnityEngine.ParticleSystem;
 using UnityEngine.UI;
 public class PlayerMove_Tutorial_Stage : MonoBehaviour
 {
+    /// <summary>
+    /// インスペクターから参照と初期化
+    /// </summary>
     Rigidbody rb;
     //float speed = 1f;
     [SerializeField]
@@ -13,7 +16,6 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
     private ParticleSystem goalspark;
     [SerializeField]
     private ParticleSystem explosion;
-
     public GameObject player;
     [SerializeField]
     private GameObject fade;

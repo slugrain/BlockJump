@@ -29,11 +29,12 @@ public class Fade_In_Start : MonoBehaviour
             FadeIn();
         }
     }
-
+    //フェードインの関数
     public void FadeIn()
     {
         alpha -= 0.01f;
         fadealpha.color = new Color(0, 0, 0, alpha);
+        //フェードインが実行された際の処理
         if (alpha <= 0)
         {
             fadein = false;
@@ -41,6 +42,7 @@ public class Fade_In_Start : MonoBehaviour
             Debug.Log("fade");
         }
     }
+    //フェードインの判定用関数
     public void FadeTrue()
     {
         fadein = true;

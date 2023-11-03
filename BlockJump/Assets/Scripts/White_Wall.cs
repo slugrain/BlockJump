@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class White_Wall : MonoBehaviour
 {
+    /// <summary>
+    /// インスペクターから参照
+    /// </summary>
     private Rigidbody rb;
     public SE_Manager manager;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
-    void Update()
-    {
-        
-    }
+
+    //　星に当たったら壁を破壊する処理
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))//　衝突した際のタグが"Star"だった時の判定

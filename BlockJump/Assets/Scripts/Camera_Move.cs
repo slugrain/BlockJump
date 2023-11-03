@@ -10,21 +10,15 @@ public class Camera_Move : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-        //unitychanの情報を取得
+        //Playerの情報を取得
         this.player = GameObject.Find("Player");
-
         // MainCamera(自分自身)とplayerとの相対距離を求める
         offset = transform.position - player.transform.position;
-
     }
-
     // Update is called once per frame
     void Update()
     {
-
         //新しいトランスフォームの値を代入する
         transform.position = player.transform.position + offset;
-
     }
 }

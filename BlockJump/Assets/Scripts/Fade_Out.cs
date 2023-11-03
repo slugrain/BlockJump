@@ -5,14 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class Fade_Out : MonoBehaviour
 {
-    public GameObject Panelfade;   //�t�F�[�h�p�l���̎擾
+    public GameObject Panelfade;
+    Image fadealpha;                //   fadePanel の読み込み
 
-    Image fadealpha;               //�t�F�[�h�p�l���̃C���[�W�擾�ϐ�
-
-    private float alpha;           //�p�l����alpha�l�擾�ϐ�
+    private float alpha;           //   パネルのアルファ値
     private string sceneName;
 
-    public bool toStageFadeOut;          //�t�F�[�h�A�E�g�̃t���O�ϐ�
+    public bool toStageFadeOut;    //   シーン遷移先に応じた bool型
     public bool toTitleFadeOut;
     public bool toTutorialFadeOut;
     public bool toGameOverFadeOut;
@@ -20,9 +19,10 @@ public class Fade_Out : MonoBehaviour
 
     void Start()
     {
-        fadealpha = Panelfade.GetComponent<Image>(); //�p�l���̃C���[�W�擾
-        alpha = fadealpha.color.a;                 //�p�l����alpha�l���擾
-        toStageFadeOut = false;                             //�V�[���ǂݍ��ݎ��Ƀt�F�[�h�C��������
+        fadealpha = Panelfade.GetComponent<Image>(); // パネルの取得
+        alpha = fadealpha.color.a;                   // パネルのアルファ値の取得
+
+        toStageFadeOut = false;                      // 全条件をオフに
         toTitleFadeOut = false;
         toTutorialFadeOut = false;
         toGameOverFadeOut = false;
@@ -32,10 +32,10 @@ public class Fade_Out : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //  各シーンに応じて sceneName を設定
         if (toStageFadeOut == true)
         {
-            sceneName = "Stage2";
+            sceneName = "Stage1";
             FadeOut();
         }
         if (toTitleFadeOut == true)
@@ -60,6 +60,9 @@ public class Fade_Out : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// フェードアウトさせる処理
+    /// </summary>
     public void FadeOut()
     {
 
@@ -72,6 +75,7 @@ public class Fade_Out : MonoBehaviour
         }
     }
 
+    //  シーン遷移先に応じた実行フラグ
     public void ToTitleFadeTrue()
     {
         toTitleFadeOut = true;

@@ -8,16 +8,11 @@ public class BGM_Manager : MonoBehaviour
 
     static BGM_Manager _instance;
 
-
-
     public AudioClip[] Audio_Clip_BGM;
 
     public float[] Audio_Clip_BGM_Vol;
 
-
     public AudioSource Audio_Source_BGM;
-
-    //float volume;
 
     private void Start()
     {

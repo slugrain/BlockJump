@@ -6,19 +6,14 @@ public class Move_Floor3 : MonoBehaviour
 {
     private Rigidbody rb;
     private bool upMax;
+    //æ“¾‚Æ‰Šú‰»
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         upMax = true;
     }
 
-
-    void Update()
-    {
-        //transform.Rotate(0, 0, 50f * Time.deltaTime);
-    }
-
-    
+    //°‚ğˆê’è‚Å“®‚©‚·
     void FixedUpdate()
     {
         if (upMax == true)
@@ -33,7 +28,9 @@ public class Move_Floor3 : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Å‘å’lEÅ¬’l
+    /// </summary>
     void MaxUp()
     {
         upMax = false;

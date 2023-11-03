@@ -8,23 +8,16 @@ public class Distance : MonoBehaviour
     public Transform player;     // プレイヤーオブジェクトのTransform
     public Transform goal;       // ゴールオブジェクトのTransform
     public Text distanceText;    // 距離を表示するUIテキスト
-    public Slider distanceSlider;
+    public Slider distanceSlider; // スライダー参照
 
     void Start()
     {
-
+        //スライダー取得
         distanceSlider = GetComponent<Slider>();
-
+        //ゴールの距離を設定
         float goalDistance = 172f;
-        
-
-
         //スライダーの最大値の設定
         distanceSlider.maxValue = goalDistance;
-
-        
-
-
     }
     public void Update()
     {

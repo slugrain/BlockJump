@@ -6,18 +6,14 @@ public class Move_Floor2 : MonoBehaviour
 {
     private Rigidbody rb;
     private bool upMax;
+    //æ“¾‚Æ‰Šú‰»
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         upMax = true;
     }
 
-
-    void Update()
-    {
-
-    }
-
+    //°‚ğˆê’è‚Å“®‚©‚·
     void FixedUpdate()
     {
         if (upMax == true)
@@ -32,7 +28,9 @@ public class Move_Floor2 : MonoBehaviour
         }
 
     }
-
+    /// <summary>
+    /// Å‘å’lEÅ¬’l
+    /// </summary>
     void MaxUp()
     {
         upMax = false;
