@@ -43,22 +43,17 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
     private Toggle move_Left_Tutorial_Toggle;
     [SerializeField]
     private Toggle dash_Tutorial_Toggle;
-
     public RedWall_Camera redWall_Camera;
     Fade_Out fadeOut;
-
     public Text textUI;
     private GUIStyle font_Size;
     public GameObject canvasObj;
     public GameObject goalObj;
     // public GameObject voiceText;
     Vector3 targetPosition;
-
     public Tutorial_Dash_Icon tutorial_Dash_Icon;
     public float upjumpPower;
     public float diagonaljumpPower;
-    private bool isJumping = false;
-    private bool diagonalJamp = false;
     private float xPos;
     public bool goal = false;
     public bool isDead = false;
@@ -69,6 +64,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
     public SE_Manager sE_Manager;
     public SE_Manager2 sE_Manager2;
     public SE_Manager3 sE_Manager3;
+    /// <summary>
+    /// 取得と遅延して関数を使用
+    /// </summary>
     void Start()
     {
         Invoke("StartVoice", 1.5f);
@@ -82,11 +80,11 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
     {
         if (isDead) return;
 
-        transform.Rotate(0, 0, -720 * Time.deltaTime);
+        transform.Rotate(0, 0, -720 * Time.deltaTime);//プレイヤーを回転させる
 
         if (dash == true)
         {
-            if (Input.GetMouseButtonUp(1))// Wキー（前方移動）
+            if (Input.GetMouseButtonUp(1))// プレイヤーをダッシュさせる
             {
                 rb.AddForce(new Vector3(70, 0, 0), ForceMode.VelocityChange);
                 spark.Stop();
@@ -95,14 +93,14 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
                 Debug.Log("Dash");
             }
 
-            if (Input.GetMouseButton(1))// Wキー（前方移動）
+            if (Input.GetMouseButton(1))
             {
                 transform.Rotate(0, 0, -360 * Time.deltaTime);
                 //spark.Play();
                 //Debug.Log("SpinUp");
             }
 
-            if (Input.GetMouseButtonDown(1))// Wキー（前方移動）
+            if (Input.GetMouseButtonDown(1))// プレイヤーの回転数を上げ、スパークを再生
             {
                 transform.Rotate(0, 0, -360 * Time.deltaTime);
                 spark.Play();
@@ -110,10 +108,13 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
             }
         }
 
-        if (goal == true)// Wキー（前方移動）
+        if (goal == true)// プレイヤーがゴールした際の挙動
         {
+            //プレイヤーの動きを止める
             rb.constraints = RigidbodyConstraints.FreezeAll;
+            //プレイヤーの回転数を加速
             transform.Rotate(0, 0, -720 * Time.deltaTime);
+            //3f後に関数を使用する
             Invoke("GoalAnim", 3f);
 
             Debug.Log("go");
@@ -127,7 +128,7 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
 
         if (jump == true)
         {
-            if (Input.GetMouseButton(0))// Wキー（前方移動）
+            if (Input.GetMouseButton(0))//　左クリックで浮上
             {
                 Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
                 Vector3 force = new Vector3(0, 30, 0);    // 力を設定
@@ -137,7 +138,7 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
         }
         if (move_Right == true)
         {
-            if (Input.GetKey(KeyCode.D))// Wキー（前方移動）
+            if (Input.GetKey(KeyCode.D))// Dキー（右移動）
             {
                 Rigidbody rb = this.GetComponent<Rigidbody>();  // rigidbodyを取得
                 Vector3 force = new Vector3(7, 0, 0);    // 力を設定
@@ -157,8 +158,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)// 青の壁に衝突した際の判定を取る
     {
-        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        if (collision.gameObject.CompareTag("Bule_Wall_Side"))//　衝突した際の壁が"Bule_Wall_Side"タグだった時の判定
         {
+            // プレイヤーの動きを制限
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionX
             | RigidbodyConstraints.FreezeRotationY;
@@ -166,24 +168,27 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
 
         }
 
-        if (collision.gameObject.CompareTag("Bule_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        if (collision.gameObject.CompareTag("Bule_Wall_Top"))//　衝突した際の壁が"Bule_Wall_Top"タグだった時の判定
         {
+            // プレイヤーの動きを制限
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionY
             | RigidbodyConstraints.FreezeRotationY;
             Debug.Log("青の壁の上面に当たった");
         }
 
-        if (collision.gameObject.CompareTag("Bule_Wall_Under"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        if (collision.gameObject.CompareTag("Bule_Wall_Under"))//　衝突した際の壁が"Bule_Wall_Under"タグだった時の判定
         {
+            // プレイヤーの動きを制限
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezePositionY
             | RigidbodyConstraints.FreezeRotationY;
             Debug.Log("青の壁の下面に当たった");
         }
 
-        if (collision.gameObject.CompareTag("Red_Wall_Side"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        if (collision.gameObject.CompareTag("Red_Wall_Side"))//　衝突した際の壁が"Red_Wall_Side"タグだった時の判定
         {
+            // プレイヤーを破壊
             sE_Manager2.Play(8);
             textUI.fontSize = 90;
             textUI.text = "チュートリアルのみ、ゲームオーバーになりません。本番では気をつけてね！";
@@ -193,8 +198,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
 
         }
 
-        if (collision.gameObject.CompareTag("Red_Wall_Top"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        if (collision.gameObject.CompareTag("Red_Wall_Top"))//　衝突した際の壁が"Red_Wall_Top"タグだった時の判定
         {
+            // プレイヤーを破壊
             sE_Manager2.Play(8);
             textUI.fontSize = 90;
             textUI.text = "チュートリアルのみ、ゲームオーバーになりません。本番では気をつけてね！";
@@ -204,8 +210,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
             Debug.Log("赤の壁の上面に当たった");
         }
 
-        if (collision.gameObject.CompareTag("Red_Wall_Under"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        if (collision.gameObject.CompareTag("Red_Wall_Under"))//　衝突した際の壁が"Red_Wall_Under"タグだった時の判定
         {
+            // プレイヤーを破壊
             sE_Manager2.Play(8);
             textUI.fontSize = 90;
             textUI.text = "チュートリアルのみ、ゲームオーバーになりません。本番では気をつけてね！";
@@ -216,6 +223,7 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Key_Wall"))//　衝突した際の壁が"Key_Wall"タグだった時の判定
         {
+            // 動きを制限
             rb.constraints = RigidbodyConstraints.FreezePositionZ
             | RigidbodyConstraints.FreezeRotationX
             | RigidbodyConstraints.FreezeRotationY
@@ -223,8 +231,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
             Debug.Log("通れない！");
         }
 
-        if (collision.gameObject.CompareTag("Jamp_Pad"))//　衝突した際の壁が"Bule_Wall"タグだった時の判定
+        if (collision.gameObject.CompareTag("Jamp_Pad"))//　衝突した際の壁が"Jamp_Pad"タグだった時の判定
         {
+            //ゴールした際の演出
             rb.constraints = RigidbodyConstraints.FreezePositionZ
           //| RigidbodyConstraints.FreezePositionY
           | RigidbodyConstraints.FreezeRotationY;
@@ -240,8 +249,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
         }
 
 
-        if (collision.gameObject.CompareTag("Floor"))
+        if (collision.gameObject.CompareTag("Floor"))//　衝突した際の壁が"Floor"タグだった時の判定
         {
+            // プレイヤーの動きを制限
             rb.constraints = RigidbodyConstraints.FreezePositionZ
         | RigidbodyConstraints.FreezeRotationX
         | RigidbodyConstraints.FreezeRotationY
@@ -345,23 +355,32 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
             Invoke("TutorialVoice9", 4f);
         }
     }
+    // プレイヤーを破壊
     public void Destroy()
     {
         //player.SetActive(false);
         sE_Manager.Play(5);
     }
+    /// <summary>
+    /// 開始したら流れるボイス
+    /// </summary>
     public void StartVoice()
     {
         sE_Manager2.Play(0);
         Invoke("StartVoice2", 5.7f);
     }
-
+    /// <summary>
+    /// 開始したら流れるボイス
+    /// </summary>
     public void StartVoice2()
     {
         sE_Manager2.Play(1);
         textUI.text = "まずはマウスの左クリックを長押しして、一番上まで上昇してみましょう！";
         jump = true;
     }
+    /// <summary>
+    /// チュートリアルで流れるボイス
+    /// </summary>
     public void TutorialVoice()
     {
         jump = false;
@@ -445,7 +464,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
         textUI.text = "以上でチュートリアルを終了します。次は本番です。頑張って下さい！";
         Invoke("Fade", 6f);
     }
-
+    /// <summary>
+    /// ゴールした際の処理
+    /// </summary>
     public void GoalAnim()
     {
         rb.constraints = RigidbodyConstraints.FreezePositionZ
@@ -455,6 +476,9 @@ public class PlayerMove_Tutorial_Stage : MonoBehaviour
           Vector3.MoveTowards(transform.position, targetPosition, 0.2f);
         Debug.Log("ゴール演出");
     }
+    /// <summary>
+    /// ゴールした後にフェードをかける
+    /// </summary>
     public void Fade()
     {
         fadeOut.toStageFadeOut = true;
