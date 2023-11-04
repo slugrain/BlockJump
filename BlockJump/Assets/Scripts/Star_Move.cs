@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Star_Move : MonoBehaviour
 {
+    // インスペクターから参照
     Vector3 targetPosition;
     private bool get = false;
     private bool acceleration = false;
@@ -19,6 +20,9 @@ public class Star_Move : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeAll;
     }
+    /// <summary>
+    /// スターの制御
+    /// </summary>
     void Update()
     {
         
@@ -35,7 +39,9 @@ public class Star_Move : MonoBehaviour
             transform.Rotate(0, 0, -360 * Time.deltaTime);
         }
     }
-
+    /// <summary>
+    /// 星が取得されたら
+    /// </summary>
     public void StarGet()
     {
         manager.Play(12);
@@ -43,18 +49,20 @@ public class Star_Move : MonoBehaviour
         acceleration =true;
         Invoke("DelayStar", 2f);
     }
+    //遅延用の関数
     public void DelayStar()
     {
         get = true;
     }
+    // 星を消す
     public void DelayStarDestry()
     {
         star.SetActive(false);
     }
-
+    // Key_Wallに衝突した際の処理
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Key_Wall"))//　衝突した際のタグが"Star"だった時の判定
+        if (collision.gameObject.CompareTag("Key_Wall"))//　衝突した際のタグが"Key_Wall"だった時の判定
         {
             var renderer = gameObject.GetComponent<Renderer>();
             renderer.enabled = false;
