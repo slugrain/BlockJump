@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Title_Camera : MonoBehaviour
 {
+    /// <summary>
+    /// インスペクターから参照
+    /// </summary>
     [SerializeField]
     private Animator animator;
     Rigidbody rb;

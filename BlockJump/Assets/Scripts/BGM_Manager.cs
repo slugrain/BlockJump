@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BGM_Manager : MonoBehaviour
 {
+    /// <summary>
+    /// QÆ‚Ææ“¾
+    /// </summary>
     public static BGM_Manager Instance { get => _instance; }
 
     static BGM_Manager _instance;

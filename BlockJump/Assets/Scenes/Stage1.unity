@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 25888061}
   m_Layer: 0
   m_Name: Red_Wall_Top (20)
-  m_TagString: Red_Wall_Under
+  m_TagString: Bule_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1715,7 +1715,7 @@ GameObject:
   - component: {fileID: 387397982}
   m_Layer: 0
   m_Name: Red_Wall_Side (3)
-  m_TagString: Red_Wall_Side
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2358,7 +2358,7 @@ GameObject:
   - component: {fileID: 455135896}
   m_Layer: 0
   m_Name: Red_Wall_Top (10)
-  m_TagString: Red_Wall_Side
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2679,7 +2679,7 @@ GameObject:
   - component: {fileID: 480518272}
   m_Layer: 0
   m_Name: Red_Wall_Top (24)
-  m_TagString: Red_Wall_Under
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3834,7 +3834,7 @@ GameObject:
   - component: {fileID: 690040176}
   m_Layer: 0
   m_Name: Red_Wall_Top
-  m_TagString: Red_Wall_Under
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4140,7 +4140,7 @@ GameObject:
   - component: {fileID: 739574916}
   m_Layer: 0
   m_Name: Red_Wall_Top (2)
-  m_TagString: Red_Wall_Side
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4313,7 +4313,7 @@ GameObject:
   - component: {fileID: 787858872}
   m_Layer: 0
   m_Name: Red_Wall_Top (23)
-  m_TagString: Red_Wall_Under
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4410,7 +4410,7 @@ GameObject:
   - component: {fileID: 796204316}
   m_Layer: 0
   m_Name: Red_Wall_Top (6)
-  m_TagString: Red_Wall_Side
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4701,7 +4701,7 @@ GameObject:
   - component: {fileID: 839989258}
   m_Layer: 0
   m_Name: Red_Wall_Top (12)
-  m_TagString: Red_Wall_Side
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4926,7 +4926,7 @@ GameObject:
   - component: {fileID: 877247672}
   m_Layer: 0
   m_Name: Red_Wall_Side (4)
-  m_TagString: Red_Wall_Side
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6406,7 +6406,7 @@ GameObject:
   - component: {fileID: 1026294856}
   m_Layer: 0
   m_Name: Red_Wall_Side (1)
-  m_TagString: Red_Wall_Side
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8203,7 +8203,7 @@ GameObject:
   - component: {fileID: 1411744401}
   m_Layer: 0
   m_Name: Red_Wall_Top (11)
-  m_TagString: Red_Wall_Side
+  m_TagString: Red_Wall_Top
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Title_Move_Player : MonoBehaviour
 {
+    /// <summary>
+    /// インスペクターから参照
+    /// </summary>
     private bool up;
-    // private bool down;
     Rigidbody rb;
     public SE_Manager sE_Manager;
     public BGM_Manager bGM_Manager;
@@ -22,23 +24,24 @@ public class Title_Move_Player : MonoBehaviour
     
     void Update()
     {
+        //プレイヤーを回転
         transform.Rotate(0, 0, -720 * Time.deltaTime);
         
         if (up == true)
         {
-            
+            //上方向に移動
             Vector3 force = new Vector3(0, 30, 0);    // 力を設定
             rb.AddForce(force);  // 力を加える
         }
     }
-
+    //遅延処理
     public void UpMax()
     {
         up = true;
         sE_Manager.Play(1);
         
     }
-
+    //遅延処理
     public void DownMax()
     {
         sE_Manager.Play(0);
@@ -46,6 +49,7 @@ public class Title_Move_Player : MonoBehaviour
         Invoke("Fade", 4f);
         Debug.Log("a");
     }
+    //フェードをさせる
     public void Fade()
     {
         fade_Out.ToTutorialFadeTrue();

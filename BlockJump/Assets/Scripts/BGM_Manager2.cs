@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class BGM_Manager2 : MonoBehaviour
 {
+    /// <summary>
+    /// QÆ‚Ææ“¾
+    /// </summary>
     public static BGM_Manager2 Instance { get => _instance; }
 
     static BGM_Manager2 _instance;
-
-
 
     public AudioClip[] Audio_Clip_BGM;
 
     public float[] Audio_Clip_BGM_Vol;
 
-
     public AudioSource Audio_Source_BGM;
-
-    //float volume;
 
     private void Start()
     {

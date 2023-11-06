@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SE_Manager : MonoBehaviour
 {
+    /// <summary>
+    /// éQè∆Ç∆éÊìæ
+    /// </summary>
     public static SE_Manager Instance { get => _instance; }
 
     static SE_Manager _instance;
@@ -12,58 +15,21 @@ public class SE_Manager : MonoBehaviour
 
     public AudioSource Audio_Source_SE;
 
-    // private bool isWalking = false;
-
 
     private void Start()
     {
         _instance = this;
 
     }
-
+    /// <summary>
+    /// SEÇó¨Ç∑èàóù
+    /// </summary>
     public void Play(int clip)
     {
         Audio_Source_SE.volume = 1;
         Audio_Source_SE.clip = Audio_Clip_SE[clip];
         Audio_Source_SE.Play();
     }
-
-    public void Stop()
-    {
-        //  StartCoroutine(FadeVolume());
-    }
-    /*
-        private IEnumerator FadeVolume()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(0.01f);
-                Audio_Source_SE.volume -= 0.01f;
-                if (Audio_Source_SE.volume <= 0)
-                    break;
-            }
-            Audio_Source_SE.Stop();
-        }
-    */
-    private void Update()
-    {
-
-        if (Input.GetKeyUp(KeyCode.Z))
-        {
-            Play(0);
-        }
-
-        if (Input.GetKeyUp(KeyCode.Y))
-        {
-            Stop();
-        }
-
-
-
-
-
-    }
-
 
 }
 
